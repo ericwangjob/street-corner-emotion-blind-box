@@ -1,0 +1,203 @@
+<main data-name="Settings-Page" class="flex flex-col justify-start items-center w-[375px] min-h-[812px] bg-[linear-gradient(180deg,#FCFAF7_0%,#F9F1EC_100%)] p-[24px] gap-[24px]" style="font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif">
+  <!-- 状态栏占位 -->
+  <div data-name="status-bar" class="flex flex-row justify-center items-center w-[327px] h-[24px]"></div>
+
+  <!-- 顶部栏 -->
+  <header data-name="header" class="flex flex-row justify-between items-center w-[327px]">
+    <div data-name="btn-back" class="flex flex-row justify-center items-center w-[44px] h-[44px] rounded-[44px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)]">
+      <i data-name="back-icon" class="fas fa-arrow-left text-[20px] text-[#2C2C2E]"></i>
+    </div>
+    <h1 data-name="header-title" class="text-[18px] leading-[24px] font-[700] text-[#2C2C2E] text-center" style="font-family:'Inter','PingFang SC',sans-serif">设置</h1>
+    <div data-name="header-spacer" class="w-[44px] h-[44px]"></div>
+  </header>
+
+  <div data-name="settings-body" class="flex flex-col justify-start items-stretch w-[327px] gap-[0px]">
+
+    <!-- 账号与隐私 -->
+    <section data-name="group-account" class="flex flex-col justify-start items-stretch w-[327px] gap-[12px] mt-[24px]">
+      <div data-name="group-title-1" class="flex flex-row justify-start items-center gap-[8px] px-[24px]">
+        <i data-name="gt-icon-1" class="fas fa-user text-[14px] text-[#B8A9E8]"></i>
+        <span data-name="gt-1" class="text-[12px] leading-[16px] font-[600] text-[#8A8A90] text-left tracking-[0.08em] uppercase" style="font-family:'Inter','PingFang SC',sans-serif">账号与隐私</span>
+      </div>
+      <div data-name="card-account" class="flex flex-col justify-start items-stretch w-[327px] rounded-[24px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)] overflow-hidden shadow-[0_2px_8px_rgba(120,104,168,0.06)]">
+        <div data-name="row-profile" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-1" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,169,232,0.18)]"><i data-name="ri-1" class="fas fa-pen text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-1" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-1" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">个人资料</span>
+            <span data-name="row-hint-1" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">修改头像、昵称与简介</span>
+          </div>
+          <i data-name="chevron-1" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+        <div data-name="row-privacy" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-2" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,212,240,0.22)]"><i data-name="ri-2" class="fas fa-lock text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-2" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-2" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">隐私设置</span>
+            <span data-name="row-hint-2" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">位置精度、公开范围与数据清理</span>
+          </div>
+          <i data-name="chevron-2" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+        <div data-name="row-security" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px]">
+          <div data-name="row-icon-3" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(248,201,176,0.25)]"><i data-name="ri-3" class="fas fa-shield-alt text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-3" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-3" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">账号安全</span>
+            <span data-name="row-hint-3" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">绑定手机、修改密码</span>
+          </div>
+          <i data-name="chevron-3" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- 通知与互动 -->
+    <section data-name="group-notify" class="flex flex-col justify-start items-stretch w-[327px] gap-[12px] mt-[24px]">
+      <div data-name="group-title-2" class="flex flex-row justify-start items-center gap-[8px] px-[24px]">
+        <i data-name="gt-icon-2" class="fas fa-bell text-[14px] text-[#B8A9E8]"></i>
+        <span data-name="gt-2" class="text-[12px] leading-[16px] font-[600] text-[#8A8A90] text-left tracking-[0.08em] uppercase" style="font-family:'Inter','PingFang SC',sans-serif">通知与互动</span>
+      </div>
+      <div data-name="card-notify" class="flex flex-col justify-start items-stretch w-[327px] rounded-[24px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)] overflow-hidden shadow-[0_2px_8px_rgba(120,104,168,0.06)]">
+        <div data-name="row-nearby" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-4" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,169,232,0.18)]"><i data-name="ri-4" class="fas fa-envelope text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-4" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-4" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">接收温柔提醒</span>
+            <span data-name="row-hint-4" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">附近有盲盒时轻提醒</span>
+          </div>
+          <div data-name="toggle-on-1" class="relative w-[50px] h-[28px] rounded-[9999px] bg-[#B8A9E8]"><span data-name="thumb-on-1" class="absolute w-[24px] h-[24px] rounded-[24px] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(120,104,168,0.06)]" style="right:2px; top:2px;"></span></div>
+        </div>
+        <div data-name="row-resonance" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-5" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(248,201,176,0.25)]"><i data-name="ri-5" class="fas fa-comment-dots text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-5" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-5" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">共鸣解锁通知</span>
+            <span data-name="row-hint-5" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">当盲盒被共鸣时通知我</span>
+          </div>
+          <div data-name="toggle-on-2" class="relative w-[50px] h-[28px] rounded-[9999px] bg-[#B8A9E8]"><span data-name="thumb-on-2" class="absolute w-[24px] h-[24px] rounded-[24px] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(120,104,168,0.06)]" style="right:2px; top:2px;"></span></div>
+        </div>
+        <div data-name="row-weekly" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px]">
+          <div data-name="row-icon-6" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,212,240,0.22)]"><i data-name="ri-6" class="far fa-clock text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-6" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-6" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">每周情绪回顾</span>
+            <span data-name="row-hint-6" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">每周一生成温柔足迹回顾</span>
+          </div>
+          <div data-name="toggle-off-1" class="relative w-[50px] h-[28px] rounded-[9999px] bg-[rgba(120,108,160,0.28)]"><span data-name="thumb-off-1" class="absolute w-[24px] h-[24px] rounded-[24px] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(120,104,168,0.06)]" style="left:2px; top:2px;"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 外观与体验 -->
+    <section data-name="group-appearance" class="flex flex-col justify-start items-stretch w-[327px] gap-[12px] mt-[24px]">
+      <div data-name="group-title-3" class="flex flex-row justify-start items-center gap-[8px] px-[24px]">
+        <i data-name="gt-icon-3" class="fas fa-cog text-[14px] text-[#B8A9E8]"></i>
+        <span data-name="gt-3" class="text-[12px] leading-[16px] font-[600] text-[#8A8A90] text-left tracking-[0.08em] uppercase" style="font-family:'Inter','PingFang SC',sans-serif">外观与体验</span>
+      </div>
+      <div data-name="card-appearance" class="flex flex-col justify-start items-stretch w-[327px] rounded-[24px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)] overflow-hidden shadow-[0_2px_8px_rgba(120,104,168,0.06)]">
+        <div data-name="row-theme" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-7" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(248,201,176,0.25)]"><i data-name="ri-7" class="far fa-moon text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-7" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-7" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">主题外观</span>
+            <span data-name="row-hint-7" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">浅色 / 深色 / 跟随系统</span>
+          </div>
+          <span data-name="row-value-7" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-right" style="font-family:'Inter','PingFang SC',sans-serif">跟随系统</span>
+          <i data-name="chevron-7" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+        <div data-name="row-haptic" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-8" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,169,232,0.18)]"><i data-name="ri-8" class="fas fa-wave-square text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-8" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-8" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">触感反馈</span>
+            <span data-name="row-hint-8" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">拾取与发布时轻震动</span>
+          </div>
+          <div data-name="toggle-on-3" class="relative w-[50px] h-[28px] rounded-[9999px] bg-[#B8A9E8]"><span data-name="thumb-on-3" class="absolute w-[24px] h-[24px] rounded-[24px] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(120,104,168,0.06)]" style="right:2px; top:2px;"></span></div>
+        </div>
+        <div data-name="row-ambient" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px]">
+          <div data-name="row-icon-9" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,212,240,0.22)]"><i data-name="ri-9" class="fas fa-volume-up text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-9" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-9" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">环境音</span>
+            <span data-name="row-hint-9" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">氛围白噪音开关</span>
+          </div>
+          <div data-name="toggle-off-2" class="relative w-[50px] h-[28px] rounded-[9999px] bg-[rgba(120,108,160,0.28)]"><span data-name="thumb-off-2" class="absolute w-[24px] h-[24px] rounded-[24px] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(120,104,168,0.06)]" style="left:2px; top:2px;"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 通用 -->
+    <section data-name="group-general" class="flex flex-col justify-start items-stretch w-[327px] gap-[12px] mt-[24px]">
+      <div data-name="group-title-4" class="flex flex-row justify-start items-center gap-[8px] px-[24px]">
+        <i data-name="gt-icon-4" class="fas fa-cog text-[14px] text-[#B8A9E8]"></i>
+        <span data-name="gt-4" class="text-[12px] leading-[16px] font-[600] text-[#8A8A90] text-left tracking-[0.08em] uppercase" style="font-family:'Inter','PingFang SC',sans-serif">通用</span>
+      </div>
+      <div data-name="card-general" class="flex flex-col justify-start items-stretch w-[327px] rounded-[24px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)] overflow-hidden shadow-[0_2px_8px_rgba(120,104,168,0.06)]">
+        <div data-name="row-language" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-10" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,212,240,0.22)]"><i data-name="ri-10" class="fas fa-globe text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-10" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-10" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">语言</span>
+          </div>
+          <span data-name="row-value-10" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-right" style="font-family:'Inter','PingFang SC',sans-serif">简体中文</span>
+          <i data-name="chevron-10" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+        <div data-name="row-storage" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-11" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,169,232,0.18)]"><i data-name="ri-11" class="fas fa-download text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-11" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-11" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">清理缓存</span>
+          </div>
+          <span data-name="row-value-11" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-right" style="font-family:'Inter','PingFang SC',sans-serif">128 MB</span>
+          <i data-name="chevron-11" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+        <div data-name="row-feedback" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-12" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(248,201,176,0.25)]"><i data-name="ri-12" class="fas fa-comment-dots text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-12" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-12" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">帮助与反馈</span>
+          </div>
+          <i data-name="chevron-12" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+        <div data-name="row-about" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px]">
+          <div data-name="row-icon-13" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,212,240,0.22)]"><i data-name="ri-13" class="fas fa-info-circle text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-13" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-13" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">关于街角情绪盲盒</span>
+          </div>
+          <span data-name="row-value-13" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-right" style="font-family:'Inter','PingFang SC',sans-serif">v1.0.0</span>
+          <i data-name="chevron-13" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- 应用功能配置 -->
+    <section data-name="group-config" class="flex flex-col justify-start items-stretch w-[327px] gap-[12px] mt-[24px]">
+      <div data-name="group-title-5" class="flex flex-row justify-start items-center gap-[8px] px-[24px]">
+        <i data-name="gt-icon-5" class="fas fa-th-large text-[14px] text-[#B8A9E8]"></i>
+        <span data-name="gt-5" class="text-[12px] leading-[16px] font-[600] text-[#8A8A90] text-left tracking-[0.08em] uppercase" style="font-family:'Inter','PingFang SC',sans-serif">应用功能配置</span>
+      </div>
+      <div data-name="card-config" class="flex flex-col justify-start items-stretch w-[327px] rounded-[24px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)] overflow-hidden shadow-[0_2px_8px_rgba(120,104,168,0.06)]">
+        <div data-name="row-default" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-14" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,169,232,0.18)]"><i data-name="ri-14" class="fas fa-cog text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-14" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-14" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">默认参数</span>
+            <span data-name="row-hint-14" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">近场距离、盲盒有效期、震动强度</span>
+          </div>
+          <span data-name="row-value-14" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-right" style="font-family:'Inter','PingFang SC',sans-serif">默认</span>
+          <i data-name="chevron-14" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+        <div data-name="row-shortcut" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px] border-b-[1px] border-[rgba(120,108,160,0.10)]">
+          <div data-name="row-icon-15" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(248,201,176,0.25)]"><i data-name="ri-15" class="fas fa-keyboard text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-15" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-15" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">快捷键</span>
+            <span data-name="row-hint-15" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">桌面端手势与快捷操作</span>
+          </div>
+          <i data-name="chevron-15" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+        <div data-name="row-export" class="flex flex-row justify-start items-center gap-[16px] w-[327px] p-[16px]">
+          <div data-name="row-icon-16" class="flex flex-row justify-center items-center w-[36px] h-[36px] rounded-[12px] bg-[rgba(184,212,240,0.22)]"><i data-name="ri-16" class="fas fa-file-export text-[18px] text-[#5A4A8A]"></i></div>
+          <div data-name="row-body-16" class="flex flex-col justify-start items-start gap-[2px] flex-1">
+            <span data-name="row-label-16" class="text-[15px] leading-[20px] font-[500] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">数据导出</span>
+            <span data-name="row-hint-16" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">导出我的温柔足迹与收藏</span>
+          </div>
+          <i data-name="chevron-16" class="fas fa-chevron-right text-[16px] text-[rgba(44,44,46,0.24)]"></i>
+        </div>
+      </div>
+    </section>
+
+    <div data-name="btn-reset" class="flex flex-row justify-center items-center w-[327px] h-[44px] rounded-[9999px] bg-transparent mt-[24px]">
+      <span data-name="reset-text" class="text-[15px] leading-[20px] font-[600] text-[#8A8A90] text-center" style="font-family:'Inter','PingFang SC',sans-serif">恢复默认设置</span>
+    </div>
+    <div data-name="btn-logout" class="flex flex-row justify-center items-center w-[327px] h-[48px] rounded-[9999px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(224,154,154,0.40)] mt-[24px]">
+      <span data-name="logout-text" class="text-[15px] leading-[20px] font-[600] text-[#E09A9A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">退出登录</span>
+    </div>
+    <p data-name="footer-caption" class="text-[12px] leading-[18px] font-[400] text-[#8A8A90] text-center mt-[24px]" style="opacity:0.8; font-family:'Inter','PingFang SC',sans-serif">把 15 分钟步行圈，变成有温度的情绪空间</p>
+  </div>
+</main>

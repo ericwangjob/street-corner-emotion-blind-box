@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#FCFAF7">
+  <title>街角情绪盲盒 · 设置</title>
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .settings-page { min-height: 100vh; padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom) + var(--space-xl)); }
+
+    /* 分组标题 */
+    .settings-group {
+      margin-top: var(--space-lg);
+    }
+    .settings-group-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 0 var(--space-lg);
+      margin-bottom: var(--space-sm);
+      font-size: var(--type-caption);
+      font-weight: 600;
+      color: var(--color-ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .settings-group-title svg {
+      width: 14px; height: 14px;
+      color: var(--color-primary);
+    }
+
+    /* 设置卡片 */
+    .settings-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 24px;
+      overflow: hidden;
+      backdrop-filter: var(--backdrop-glass);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* 设置行 */
+    .settings-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--color-divider);
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      transition: background 180ms var(--ease-soft);
+      cursor: pointer;
+    }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-row:active { background: var(--color-primary-subtle); }
+
+    .settings-row .icon {
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      display: grid; place-items: center;
+      flex-shrink: 0;
+      background: var(--color-primary-subtle);
+      color: var(--color-brand-dark);
+    }
+    .settings-row .body {
+      flex: 1; min-width: 0;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .settings-row .label {
+      font-size: var(--type-body);
+      font-weight: 500;
+      color: var(--color-ink);
+    }
+    .settings-row .hint {
+      font-size: var(--type-caption);
+      color: var(--color-ink-muted);
+    }
+    .settings-row .value {
+      font-size: var(--type-caption);
+      color: var(--color-ink-muted);
+      margin-left: auto;
+      padding-right: var(--space-xs);
+    }
+    .settings-row .chevron {
+      margin-left: auto;
+      color: var(--color-ink-subtle);
+      flex-shrink: 0;
+    }
+
+    /* Toggle 开关 */
+    .toggle {
+      position: relative;
+      width: 50px; height: 28px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .toggle input {
+      position: absolute;
+      opacity: 0;
+      width: 100%; height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: var(--color-border-strong);
+      transition: background 220ms var(--ease-soft);
+    }
+    .toggle-thumb {
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      transition: transform 220ms var(--ease-bounce-soft);
+    }
+    .toggle input:checked + .toggle-track { background: var(--color-primary); }
+    .toggle input:checked + .toggle-track + .toggle-thumb { transform: translateX(22px); }
+
+    /* Sheet 内专用 */
+    .sheet-title {
+      font-size: var(--type-h2);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: var(--space-md);
+      color: var(--color-ink);
+    }
+    .sheet-body { padding: 0 var(--space-sm); }
+
+    /* 单选 */
+    .check-radio {
+      position: relative;
+      width: 22px; height: 22px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .check-radio input {
+      position: absolute;
+      opacity: 0;
+      width: 100%; height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .check-radio span {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--color-border-strong);
+      transition: all 180ms var(--ease-soft);
+    }
+    .check-radio input:checked + span {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+      box-shadow: inset 0 0 0 4px #fff;
+    }
+
+    /* 退出登录 */
+    .btn-logout {
+      width: 100%;
+      padding: 14px;
+      border-radius: 9999px;
+      background: var(--color-surface);
+      border: 1px solid rgba(224, 154, 154, 0.4);
+      color: var(--color-error);
+      font-weight: 600;
+      font-size: var(--type-body);
+      backdrop-filter: var(--backdrop-glass);
+      margin-top: var(--space-xl);
+      transition: background 180ms var(--ease-soft);
+    }
+    .btn-logout:active { background: var(--color-error-bg); }
+  </style>
+</head>
+<body>
+  <main class="settings-page bg-warm" id="settings-page">
+    <div class="status-bar-spacer"></div>
+
+    <!-- 顶部栏 -->
+    <header class="container" style="display:flex; align-items:center; justify-content:space-between; padding-top: var(--space-md); padding-bottom: var(--space-md);">
+      <a href="me.html" class="btn-icon" aria-label="返回">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </a>
+      <div class="page-title page-title--center">
+        <p class="page-title__en">SETTINGS</p>
+        <h1 class="page-title__cn text-h2">设置</h1>
+      </div>
+      <div style="width: 44px;"></div>
+    </header>
+
+    <div class="container">
+      <!-- 账号与隐私 -->
+      <section class="settings-group">
+        <div class="settings-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          账号与隐私
+        </div>
+        <div class="settings-card">
+          <a href="me.html" class="settings-row">
+            <div class="icon" style="background: rgba(184,169,232,0.18);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">个人资料</span>
+              <span class="hint">修改头像、昵称与简介</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <button class="settings-row" data-open-sheet="privacy-sheet">
+            <div class="icon" style="background: rgba(184,212,240,0.22);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">隐私设置</span>
+              <span class="hint">位置精度、公开范围与数据清理</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <button class="settings-row" data-open-sheet="security-sheet">
+            <div class="icon" style="background: rgba(248,201,176,0.25);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">账号安全</span>
+              <span class="hint">绑定手机、修改密码</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- 通知与互动 -->
+      <section class="settings-group">
+        <div class="settings-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          通知与互动
+        </div>
+        <div class="settings-card">
+          <label class="settings-row">
+            <div class="icon" style="background: rgba(184,169,232,0.18);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <div class="body">
+              <span class="label">接收温柔提醒</span>
+              <span class="hint">附近有盲盒时轻提醒</span>
+            </div>
+            <span class="toggle">
+              <input type="checkbox" checked data-setting="notify-nearby">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+          <label class="settings-row">
+            <div class="icon" style="background: rgba(248,201,176,0.25);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">共鸣解锁通知</span>
+              <span class="hint">当盲盒被共鸣时通知我</span>
+            </div>
+            <span class="toggle">
+              <input type="checkbox" checked data-setting="notify-resonance">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+          <label class="settings-row">
+            <div class="icon" style="background: rgba(184,212,240,0.22);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div class="body">
+              <span class="label">每周情绪回顾</span>
+              <span class="hint">每周一生成温柔足迹回顾</span>
+            </div>
+            <span class="toggle">
+              <input type="checkbox" data-setting="notify-weekly">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <!-- 外观与体验 -->
+      <section class="settings-group">
+        <div class="settings-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          外观与体验
+        </div>
+        <div class="settings-card">
+          <button class="settings-row" data-open-sheet="theme-sheet">
+            <div class="icon" style="background: rgba(248,201,176,0.25);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">主题外观</span>
+              <span class="hint">浅色 / 深色 / 跟随系统</span>
+            </div>
+            <span class="value" id="theme-value">跟随系统</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <label class="settings-row">
+            <div class="icon" style="background: rgba(184,169,232,0.18);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10v3"></path><path d="M6 6v11"></path><path d="M10 3v18"></path><path d="M14 8v7"></path><path d="M18 5v13"></path><path d="M22 10v4"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">触感反馈</span>
+              <span class="hint">拾取与发布时轻震动</span>
+            </div>
+            <span class="toggle">
+              <input type="checkbox" checked data-setting="haptic-feedback">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+          <label class="settings-row">
+            <div class="icon" style="background: rgba(184,212,240,0.22);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">环境音</span>
+              <span class="hint">氛围白噪音开关</span>
+            </div>
+            <span class="toggle">
+              <input type="checkbox" data-setting="ambient-sound">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <!-- 通用 -->
+      <section class="settings-group">
+        <div class="settings-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          通用
+        </div>
+        <div class="settings-card">
+          <button class="settings-row" data-open-sheet="language-sheet">
+            <div class="icon" style="background: rgba(184,212,240,0.22);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">语言</span>
+            </div>
+            <span class="value" id="language-value">简体中文</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <button class="settings-row" data-open-sheet="storage-sheet">
+            <div class="icon" style="background: rgba(184,169,232,0.18);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </div>
+            <div class="body">
+              <span class="label">清理缓存</span>
+            </div>
+            <span class="value" id="cache-value">128 MB</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <button class="settings-row" data-func="feedback">
+            <div class="icon" style="background: rgba(248,201,176,0.25);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">帮助与反馈</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <button class="settings-row" data-func="about">
+            <div class="icon" style="background: rgba(184,212,240,0.22);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="body">
+              <span class="label">关于街角情绪盲盒</span>
+            </div>
+            <span class="value">v1.0.0</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- 应用功能配置 -->
+      <section class="settings-group">
+        <div class="settings-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+          应用功能配置
+        </div>
+        <div class="settings-card">
+          <button class="settings-row" data-open-sheet="default-sheet">
+            <div class="icon" style="background: rgba(184,169,232,0.18);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">默认参数</span>
+              <span class="hint">近场距离、盲盒有效期、震动强度</span>
+            </div>
+            <span class="value" id="default-value">默认</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <button class="settings-row" data-func="快捷键">
+            <div class="icon" style="background: rgba(248,201,176,0.25);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><path d="M6 8h.001"></path><path d="M10 8h.001"></path><path d="M14 8h.001"></path><path d="M18 8h.001"></path><path d="M8 12h.001"></path><path d="M12 12h.001"></path><path d="M16 12h.001"></path><path d="M7 16h10"></path></svg>
+            </div>
+            <div class="body">
+              <span class="label">快捷键</span>
+              <span class="hint">桌面端手势与快捷操作</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <button class="settings-row" data-func="数据导出">
+            <div class="icon" style="background: rgba(184,212,240,0.22);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </div>
+            <div class="body">
+              <span class="label">数据导出</span>
+              <span class="hint">导出我的温柔足迹与收藏</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </section>
+
+      <button class="btn btn-ghost" data-func="reset-settings" style="width:100%; margin-top: var(--space-lg); color: var(--color-ink-muted);">恢复默认设置</button>
+      <button class="btn-logout" id="settings-logout">退出登录</button>
+
+      <p class="text-caption text-secondary" style="text-align:center; margin-top: var(--space-lg); opacity:0.8;">把 15 分钟步行圈，变成有温度的情绪空间</p>
+    </div>
+  </main>
+
+  <!-- ===== Sheets ===== -->
+  <div class="modal-backdrop" data-sheet-backdrop="theme-sheet"></div>
+  <div class="modal-sheet" data-sheet="theme-sheet" role="dialog" aria-modal="true" aria-label="选择主题">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">主题外观</div>
+    <div class="sheet-body">
+      <label class="settings-row" style="border-bottom:1px solid var(--color-divider); border-radius:0; padding-left:0; padding-right:0;">
+        <div class="body"><span class="label">浅色</span></div>
+        <span class="check-radio"><input type="radio" name="theme" value="light" data-radio="theme"><span></span></span>
+      </label>
+      <label class="settings-row" style="border-bottom:1px solid var(--color-divider); border-radius:0; padding-left:0; padding-right:0;">
+        <div class="body"><span class="label">深色</span></div>
+        <span class="check-radio"><input type="radio" name="theme" value="dark" data-radio="theme"><span></span></span>
+      </label>
+      <label class="settings-row" style="border-radius:0; padding-left:0; padding-right:0;">
+        <div class="body"><span class="label">跟随系统</span></div>
+        <span class="check-radio"><input type="radio" name="theme" value="system" data-radio="theme" checked><span></span></span>
+      </label>
+    </div>
+    <button class="btn btn-secondary" data-close-sheet="theme-sheet" style="margin-top: var(--space-md); width:100%;">完成</button>
+  </div>
+
+  <div class="modal-backdrop" data-sheet-backdrop="language-sheet"></div>
+  <div class="modal-sheet" data-sheet="language-sheet" role="dialog" aria-modal="true" aria-label="选择语言">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">语言</div>
+    <div class="sheet-body">
+      <label class="settings-row" style="border-bottom:1px solid var(--color-divider); border-radius:0; padding-left:0; padding-right:0;">
+        <div class="body"><span class="label">简体中文</span></div>
+        <span class="check-radio"><input type="radio" name="language" value="zh-CN" data-radio="language" checked><span></span></span>
+      </label>
+      <label class="settings-row" style="border-bottom:1px solid var(--color-divider); border-radius:0; padding-left:0; padding-right:0;">
+        <div class="body"><span class="label">繁體中文</span></div>
+        <span class="check-radio"><input type="radio" name="language" value="zh-TW" data-radio="language"><span></span></span>
+      </label>
+      <label class="settings-row" style="border-radius:0; padding-left:0; padding-right:0;">
+        <div class="body"><span class="label">English</span></div>
+        <span class="check-radio"><input type="radio" name="language" value="en" data-radio="language"><span></span></span>
+      </label>
+    </div>
+    <button class="btn btn-secondary" data-close-sheet="language-sheet" style="margin-top: var(--space-md); width:100%;">完成</button>
+  </div>
+
+  <div class="modal-backdrop" data-sheet-backdrop="privacy-sheet"></div>
+  <div class="modal-sheet" data-sheet="privacy-sheet" role="dialog" aria-modal="true" aria-label="隐私设置">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">隐私设置</div>
+    <div class="sheet-body">
+      <p class="text-body text-secondary" style="margin-bottom: var(--space-md);">你的位置与盲盒信息均在本地模糊化处理，72 小时后自动消散。</p>
+      <label class="settings-row" style="padding-left:0; padding-right:0; border-bottom:1px solid var(--color-divider);">
+        <div class="body"><span class="label">精确位置</span><span class="hint">开启后可进入 15 米近场互动</span></div>
+        <span class="toggle"><input type="checkbox" checked data-setting="precise-location"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
+      </label>
+      <label class="settings-row" style="padding-left:0; padding-right:0;">
+        <div class="body"><span class="label">数据自动清理</span><span class="hint">本地缓存 72 小时后删除</span></div>
+        <span class="toggle"><input type="checkbox" checked data-setting="auto-cleanup"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+    <button class="btn btn-secondary" data-close-sheet="privacy-sheet" style="margin-top: var(--space-md); width:100%;">完成</button>
+  </div>
+
+  <div class="modal-backdrop" data-sheet-backdrop="security-sheet"></div>
+  <div class="modal-sheet" data-sheet="security-sheet" role="dialog" aria-modal="true" aria-label="账号安全">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">账号安全</div>
+    <div class="sheet-body">
+      <div class="card" style="padding: var(--space-md); margin-bottom: var(--space-md);">
+        <p class="text-body">当前登录方式</p>
+        <p class="text-caption text-secondary">微信一键登录 · 匿名 ID</p>
+      </div>
+      <button class="btn btn-secondary" data-func="bind-phone" style="width:100%; margin-bottom: var(--space-sm);">绑定手机号</button>
+      <button class="btn btn-ghost" data-func="reset-password" style="width:100%; margin-bottom: var(--space-sm);">修改密码</button>
+      <button class="btn btn-ghost" data-func="login-history" style="width:100%; margin-bottom: var(--space-sm);">登录记录</button>
+      <button class="btn btn-ghost" data-func="permission-manage" style="width:100%;">权限管理</button>
+    </div>
+    <button class="btn btn-secondary" data-close-sheet="security-sheet" style="margin-top: var(--space-md); width:100%;">完成</button>
+  </div>
+
+  <div class="modal-backdrop" data-sheet-backdrop="storage-sheet"></div>
+  <div class="modal-sheet" data-sheet="storage-sheet" role="dialog" aria-modal="true" aria-label="清理缓存">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">清理缓存</div>
+    <div class="sheet-body" style="text-align:center;">
+      <p class="text-h1" style="color: var(--color-brand-dark); margin-bottom: var(--space-sm);">128 MB</p>
+      <p class="text-caption text-secondary" style="margin-bottom: var(--space-lg);">缓存包含已加载的盲盒缩略图与 AIGC 图卷预览。</p>
+      <button class="btn btn-primary" data-func="clear-cache" style="width:100%;">立即清理</button>
+    </div>
+    <button class="btn btn-ghost" data-close-sheet="storage-sheet" style="margin-top: var(--space-sm); width:100%;">取消</button>
+  </div>
+
+  <div class="modal-backdrop" data-sheet-backdrop="default-sheet"></div>
+  <div class="modal-sheet" data-sheet="default-sheet" role="dialog" aria-modal="true" aria-label="默认参数">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">默认参数</div>
+    <div class="sheet-body">
+      <label class="settings-row" style="padding-left:0; padding-right:0; border-bottom:1px solid var(--color-divider);">
+        <div class="body"><span class="label">近场感应距离</span><span class="hint">进入该范围可拾取盲盒</span></div>
+        <span class="value">15 米</span>
+      </label>
+      <label class="settings-row" style="padding-left:0; padding-right:0; border-bottom:1px solid var(--color-divider);">
+        <div class="body"><span class="label">盲盒有效期</span><span class="hint">超过后自动消散</span></div>
+        <span class="value">72 小时</span>
+      </label>
+      <label class="settings-row" style="padding-left:0; padding-right:0;">
+        <div class="body"><span class="label">震动强度</span><span class="hint">近场与共鸣反馈强度</span></div>
+        <span class="value">轻柔</span>
+      </label>
+    </div>
+    <button class="btn btn-secondary" data-close-sheet="default-sheet" style="margin-top: var(--space-md); width:100%;">完成</button>
+  </div>
+
+  <script src="js/themes.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/editor-injected.js"></script>
+</body>
+</html>

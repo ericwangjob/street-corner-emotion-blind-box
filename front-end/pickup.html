@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#F8F6FC">
+  <title>街角情绪盲盒 · 拾取温柔</title>
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .pickup-page { min-height: 100vh; display: flex; flex-direction: column; }
+    .pickup-header { padding: var(--space-md); display: flex; align-items: center; gap: var(--space-sm); }
+    .pulse-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1px solid rgba(184, 169, 232, 0.3);
+      animation: ripple 2.5s ease-out infinite;
+    }
+    .pulse-ring:nth-child(2) { animation-delay: 0.8s; }
+    .pulse-ring:nth-child(3) { animation-delay: 1.6s; }
+  </style>
+</head>
+<body>
+  <main class="pickup-page bg-canvas" id="pickup-page">
+    <div class="status-bar-spacer"></div>
+
+    <!-- 顶部返回 -->
+    <header class="pickup-header">
+      <a href="index.html" class="btn-icon" aria-label="返回">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </a>
+      <div class="page-title">
+        <p class="page-title__en">PROXIMITY UNLOCK</p>
+        <h1 class="page-title__cn text-h1">你走进了一份温柔</h1>
+      </div>
+    </header>
+
+    <!-- 近场动画 -->
+    <section style="flex:1; display:grid; place-items:center; position:relative;">
+      <div style="position:relative; width: 180px; height: 180px; display:grid; place-items:center;">
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <div style="width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #FFFFFF 0%, #F5F1FA 100%); box-shadow: var(--shadow-lg), var(--shadow-glow); display:grid; place-items:center;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </div>
+      </div>
+      <p class="text-caption text-secondary" style="position:absolute; bottom: var(--space-2xl);">距离 8 米 · 正在解锁</p>
+    </section>
+
+    <!-- 微光卡片（自动滑出） -->
+    <div class="modal-backdrop open" data-sheet-backdrop="pickup" style="background: rgba(44, 34, 72, 0.18);"></div>
+    <article class="modal-sheet open proximity-card" data-sheet="pickup" data-proximity-card data-pickup-queue style="transform: translateY(0);">
+      <div class="sheet-header">
+        <div class="sheet-handle"></div>
+      </div>
+
+      <div class="media-cover mood-media" id="pickupMoodImage" data-tone="warm">
+        <img data-field="img"
+             src="assets/image/card-img.png"
+             alt="晚霞下，一只橘猫蹲在街角的路沿上，影子被拉得很长"
+             onload="this.closest('.media-cover').classList.add('is-loaded')"
+             onerror="this.classList.add('is-error'); this.closest('.media-cover').classList.add('is-error')">
+        <div class="media-fallback" aria-hidden="true">
+          <svg viewBox="0 0 200 120" preserveAspectRatio="none">
+            <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FADADD"/><stop offset="100%" stop-color="#FCE5D9"/></linearGradient></defs>
+            <ellipse cx="160" cy="30" rx="50" ry="30" fill="url(#g1)" opacity="0.8"/>
+            <ellipse cx="40" cy="90" rx="60" ry="40" fill="#D8E1E9" opacity="0.6"/>
+          </svg>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: var(--space-sm);">
+        <span class="badge badge-mood-warm" data-field="mood">暖意 · 橙</span>
+        <span style="display:flex; align-items:center; gap: var(--space-sm);">
+          <span class="pickup-queue-indicator" data-queue-indicator aria-live="polite">1 / N</span>
+          <span class="text-caption" data-field="time">周二 17:20 · 24°C 微风</span>
+        </span>
+      </div>
+
+      <blockquote style="border-left: 3px solid var(--color-secondary); padding-left: var(--space-md); margin: var(--space-md) 0; font-size: var(--type-body-lg); line-height: 1.55; color: var(--color-ink-secondary);" data-field="quote">
+        "今天下班路过这只橘猫，它好像专门在等我。晚霞把影子拉得很长，想把这一刻留给下一位散步的人。"
+      </blockquote>
+
+      <p class="text-caption text-muted" style="margin-bottom: var(--space-lg);" data-field="author">来自 · 一位路过的风打理人</p>
+
+      <button class="btn btn-primary btn-block" data-receive>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        接收此温柔
+      </button>
+    </article>
+
+    <!-- 底部 Tab 栏 -->
+    <nav class="tab-bar" role="tablist" aria-label="主导航" style="display:none;">
+      <a href="index.html" class="tab-item" role="tab" aria-selected="false">罗盘</a>
+      <a href="footprint.html" class="tab-item" role="tab" aria-selected="false">足迹</a>
+      <a href="me.html" class="tab-item" role="tab" aria-selected="false">我的</a>
+    </nav>
+  </main>
+
+  <script src="js/themes.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // 模拟近场感应：2.5s 后触发震动
+    setTimeout(() => {
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate([60, 300, 60]);
+      }
+    }, 1200);
+  </script>
+  <script src="js/editor-injected.js"></script>
+</body>
+</html>

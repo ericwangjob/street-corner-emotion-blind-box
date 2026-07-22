@@ -1,0 +1,113 @@
+<main data-name="Release-Blindbox" class="flex flex-col justify-start items-center w-[375px] min-h-[812px] bg-[linear-gradient(180deg,#FCFAF7_0%,#F9F1EC_100%)] p-[24px] gap-[32px]" style="font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif">
+  <!-- 状态栏占位 -->
+  <div data-name="status-bar" class="flex flex-row justify-center items-center w-[327px] h-[24px]"></div>
+
+  <!-- 顶部导航 -->
+  <header data-name="header" class="flex flex-row justify-between items-center w-[327px]">
+    <div data-name="btn-close" class="flex flex-row justify-center items-center w-[44px] h-[44px] rounded-[44px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)]">
+      <i data-name="close-icon" class="fas fa-times text-[20px] text-[#2C2C2E]"></i>
+    </div>
+    <h1 data-name="header-title" class="text-[20px] leading-[24px] font-[700] text-[#2C2C2E] text-center" style="font-family:'Inter','PingFang SC',sans-serif">种下一个温柔盲盒</h1>
+    <div data-name="btn-more" class="flex flex-row justify-center items-center w-[44px] h-[44px] rounded-[44px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)]">
+      <i data-name="more-icon" class="fas fa-ellipsis-h text-[20px] text-[#2C2C2E]"></i>
+    </div>
+  </header>
+
+  <!-- 留下一个瞬间 -->
+  <section data-name="section-media" class="flex flex-col justify-start items-stretch w-[327px] gap-[16px]">
+    <div data-name="section-title-1" class="flex flex-row justify-start items-center gap-[8px]">
+      <span data-name="title-dot" class="w-[6px] h-[6px] rounded-[6px] bg-[#B8A9E8]"></span>
+      <h2 data-name="title-1" class="text-[18px] leading-[24px] font-[600] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">留下一个瞬间</h2>
+    </div>
+    <p data-name="media-hint" class="text-[12px] leading-[18px] font-[400] text-[#54545A] text-left" style="font-family:'Inter','PingFang SC',sans-serif">拍一张照片，或录一段 5 秒的环境音（二选一）</p>
+
+    <div data-name="media-capture" class="relative flex flex-col justify-center items-center gap-[12px] w-[327px] h-[200px] rounded-[24px] bg-[rgba(184,169,232,0.08)] border-[2px] border-dashed-[rgba(120,108,160,0.28)]">
+      <i data-name="capture-icon" class="fas fa-camera text-[40px] text-[#B8A9E8]"></i>
+      <span data-name="capture-text" class="text-[15px] leading-[20px] font-[400] text-[#54545A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">点击拍照或录音</span>
+      <img data-name="capture-preview" src="{{上传的情绪照片 街角瞬间}}" class="absolute w-[327px] h-[200px] object-cover rounded-[24px] opacity-0" />
+    </div>
+
+    <div data-name="media-actions" class="flex flex-row justify-center items-center gap-[16px] w-[327px]">
+      <div data-name="btn-camera" class="flex flex-row justify-center items-center gap-[8px] w-[155px] h-[44px] rounded-[9999px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)]">
+        <i data-name="camera-icon" class="fas fa-camera text-[18px] text-[#2C2C2E]"></i>
+        <span data-name="camera-text" class="text-[15px] leading-[20px] font-[600] text-[#2C2C2E] text-center" style="font-family:'Inter','PingFang SC',sans-serif">拍照</span>
+      </div>
+      <div data-name="btn-audio" class="flex flex-row justify-center items-center gap-[8px] w-[155px] h-[44px] rounded-[9999px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)]">
+        <i data-name="audio-icon" class="fas fa-microphone text-[18px] text-[#2C2C2E]"></i>
+        <span data-name="audio-text" class="text-[15px] leading-[20px] font-[600] text-[#2C2C2E] text-center" style="font-family:'Inter','PingFang SC',sans-serif">录音 5s</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 选择情绪颜色 -->
+  <section data-name="section-mood" class="flex flex-col justify-start items-stretch w-[327px] gap-[16px]">
+    <div data-name="section-title-2" class="flex flex-row justify-start items-center gap-[8px]">
+      <span data-name="title-dot-2" class="w-[6px] h-[6px] rounded-[6px] bg-[#B8A9E8]"></span>
+      <h2 data-name="title-2" class="text-[18px] leading-[24px] font-[600] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">选择情绪颜色</h2>
+    </div>
+    <p data-name="mood-hint" class="text-[12px] leading-[18px] font-[400] text-[#54545A] text-left" style="font-family:'Inter','PingFang SC',sans-serif">必填，这决定光点在地图上的颜色</p>
+
+    <div data-name="mood-options" class="flex flex-row justify-between items-stretch w-[327px] gap-[12px]">
+      <div data-name="mood-relaxed-selected" class="flex flex-col justify-center items-center gap-[8px] w-[72px] h-[88px] rounded-[20px] border-[2px] border-[#B8A9E8] bg-[rgba(184,169,232,0.08)]">
+        <div data-name="dot-relaxed" class="w-[32px] h-[32px] rounded-[32px] bg-[#D8E2DC]"></div>
+        <span data-name="mood-label-1" class="text-[12px] leading-[16px] font-[400] text-[#54545A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">松弛</span>
+      </div>
+      <div data-name="mood-sweet" class="flex flex-col justify-center items-center gap-[8px] w-[72px] h-[88px] rounded-[20px] border-[2px] border-transparent bg-[rgba(255,255,255,0.72)]">
+        <div data-name="dot-sweet" class="w-[32px] h-[32px] rounded-[32px] bg-[#FFE5D9]"></div>
+        <span data-name="mood-label-2" class="text-[12px] leading-[16px] font-[400] text-[#54545A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">微甜</span>
+      </div>
+      <div data-name="mood-daydream" class="flex flex-col justify-center items-center gap-[8px] w-[72px] h-[88px] rounded-[20px] border-[2px] border-transparent bg-[rgba(255,255,255,0.72)]">
+        <div data-name="dot-daydream" class="w-[32px] h-[32px] rounded-[32px] bg-[#D8E1E9]"></div>
+        <span data-name="mood-label-3" class="text-[12px] leading-[16px] font-[400] text-[#54545A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">发呆</span>
+      </div>
+      <div data-name="mood-warm" class="flex flex-col justify-center items-center gap-[8px] w-[72px] h-[88px] rounded-[20px] border-[2px] border-transparent bg-[rgba(255,255,255,0.72)]">
+        <div data-name="dot-warm" class="w-[32px] h-[32px] rounded-[32px] bg-[#FECEB6]"></div>
+        <span data-name="mood-label-4" class="text-[12px] leading-[16px] font-[400] text-[#54545A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">暖意</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 留一句轻柔的话 -->
+  <section data-name="section-note" class="flex flex-col justify-start items-stretch w-[327px] gap-[16px]">
+    <div data-name="section-title-3" class="flex flex-row justify-start items-center gap-[8px]">
+      <span data-name="title-dot-3" class="w-[6px] h-[6px] rounded-[6px] bg-[#B8A9E8]"></span>
+      <h2 data-name="title-3" class="text-[18px] leading-[24px] font-[600] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">留一句轻柔的话</h2>
+    </div>
+    <p data-name="note-hint" class="text-[12px] leading-[18px] font-[400] text-[#54545A] text-left" style="font-family:'Inter','PingFang SC',sans-serif">选填，不超过 140 字</p>
+
+    <div data-name="note-input" class="flex flex-row justify-start items-start w-[327px] min-h-[120px] rounded-[20px] bg-[rgba(245,243,250,0.92)] border-[1px] border-[rgba(120,108,160,0.16)] p-[16px]">
+      <span data-name="note-placeholder" class="text-[15px] leading-[24px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">把此刻的心情，写给下一位路过的人…</span>
+    </div>
+  </section>
+
+  <!-- 此时此地 -->
+  <section data-name="section-climate" class="flex flex-col justify-start items-stretch w-[327px] gap-[16px]">
+    <div data-name="section-title-4" class="flex flex-row justify-start items-center gap-[8px]">
+      <span data-name="title-dot-4" class="w-[6px] h-[6px] rounded-[6px] bg-[#B8A9E8]"></span>
+      <h2 data-name="title-4" class="text-[18px] leading-[24px] font-[600] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">此时此地</h2>
+    </div>
+    <p data-name="climate-hint" class="text-[12px] leading-[18px] font-[400] text-[#54545A] text-left" style="font-family:'Inter','PingFang SC',sans-serif">坐标与天气会自动关联，72 小时后自然消散</p>
+
+    <div data-name="micro-climate" class="flex flex-row justify-start items-center gap-[12px] w-[327px] flex-wrap">
+      <div data-name="chip-location" class="flex flex-row justify-center items-center gap-[8px] rounded-[9999px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)] p-[8px]">
+        <i data-name="loc-icon" class="fas fa-map-marker-alt text-[14px] text-[#54545A]"></i>
+        <span data-name="loc-text" class="text-[12px] leading-[16px] font-[400] text-[#54545A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">上海市 · 静安区</span>
+      </div>
+      <div data-name="chip-weather" class="flex flex-row justify-center items-center gap-[8px] rounded-[9999px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)] p-[8px]">
+        <i data-name="weather-icon" class="fas fa-sun text-[14px] text-[#54545A]"></i>
+        <span data-name="weather-text" class="text-[12px] leading-[16px] font-[400] text-[#54545A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">24°C 微风</span>
+      </div>
+      <div data-name="chip-time" class="flex flex-row justify-center items-center gap-[8px] rounded-[9999px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)] p-[8px]">
+        <i data-name="time-icon" class="far fa-clock text-[14px] text-[#54545A]"></i>
+        <span data-name="time-text" class="text-[12px] leading-[16px] font-[400] text-[#54545A] text-center" style="font-family:'Inter','PingFang SC',sans-serif">18:42</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 提交按钮 -->
+  <div data-name="btn-submit" class="flex flex-row justify-center items-center gap-[8px] w-[327px] h-[52px] rounded-[9999px] bg-[#B8A9E8] shadow-[0_4px_16px_rgba(120,104,168,0.12)]">
+    <i data-name="submit-icon" class="fas fa-shield-alt text-[18px] text-[#FFFFFF]"></i>
+    <span data-name="submit-text" class="text-[15px] leading-[20px] font-[600] text-[#FFFFFF] text-center" style="font-family:'Inter','PingFang SC',sans-serif">留在此时此地</span>
+  </div>
+  <p data-name="submit-caption" class="text-[12px] leading-[18px] font-[400] text-[#8A8A90] text-center" style="font-family:'Inter','PingFang SC',sans-serif">盲盒将以温柔代号发布，不会暴露你的身份</p>
+</main>

@@ -1,0 +1,34 @@
+# ============================================================
+#  街角情绪盲盒 / Street Corner Emotion Blind Box
+#  .gitignore  — 排除本地缓存、工具产物与敏感/无关文件
+# ============================================================
+
+# ---------- 操作系统 / 编辑器 ----------
+.DS_Store
+.AppleDouble
+.Spotlight-V100
+.Trashes
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# ---------- 本地工作记忆（含个人备注，不入库） ----------
+.workbuddy/
+
+# ---------- 本地缓存 / 运行时产物 ----------
+.cache/
+.cloudstudio
+
+# ---------- 依赖（本仓库为纯静态前端，无需 node_modules） ----------
+node_modules/
+
+# ---------- 陈旧脚手架：小写 frontend/ 是早期 Vite 尝试，非当前原型 ----------
+frontend/
+
+# ---------- 设计工具导出产物（ardot / mastergo 源文件已在 front-end/mastergo 保留） ----------
+ardot/
+
+# ---------- 仓库根目录下的临时截图 ----------
+/Remove_the_white_circular_play_2026-07-22T02-26-53.png

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#FCFAF7">
+  <title>街角情绪盲盒 · 我的</title>
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .me-page { min-height: 100vh; }
+
+    /* 下拉刷新指示器 */
+    .ptr {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      color: var(--color-ink-muted);
+      font-size: var(--type-caption);
+      transform: translateY(-60px);
+      opacity: 0;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .ptr-spinner {
+      width: 18px; height: 18px;
+      border: 2px solid var(--color-primary-subtle);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+    }
+    .ptr-spinner.spin { animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 头像 */
+    .avatar-btn {
+      position: relative;
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #B8A9E8 0%, #F8C9B0 100%);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      transition: transform 200ms var(--ease-bounce-soft);
+    }
+    .avatar-btn:active { transform: scale(0.96); }
+    .avatar-badge {
+      position: absolute;
+      right: 2px; bottom: 2px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--color-surface-solid);
+      border: 2px solid #fff;
+      display: grid; place-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* 昵称编辑 */
+    .nickname-edit {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-top: var(--space-sm);
+    }
+    .nickname-edit svg { color: var(--color-ink-muted); transition: color 180ms; }
+    .nickname-edit:active svg { color: var(--color-primary); }
+
+    /* 统计卡片 */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    .stat-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: var(--space-md);
+      text-align: center;
+      backdrop-filter: var(--backdrop-glass);
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-num {
+      font-size: var(--type-h1);
+      font-weight: 700;
+      color: var(--color-brand-dark);
+      line-height: 1.1;
+    }
+
+    /* 功能入口列表 */
+    .func-list {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 24px;
+      overflow: hidden;
+      backdrop-filter: var(--backdrop-glass);
+      box-shadow: var(--shadow-lg);
+      margin-top: var(--space-lg);
+    }
+    .func-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--color-divider);
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 180ms var(--ease-soft);
+    }
+    .func-row:last-child { border-bottom: none; }
+    .func-row:active,
+    .func-row:hover { background: var(--color-primary-subtle); }
+    .func-icon {
+      width: 40px; height: 40px;
+      border-radius: 13px;
+      display: grid; place-items: center;
+      background: var(--color-primary-subtle);
+      color: var(--color-brand-dark);
+      flex-shrink: 0;
+    }
+    .func-label { font-size: var(--type-body); font-weight: 500; color: var(--color-ink); }
+    .func-row .chevron { margin-left: auto; color: var(--color-ink-subtle); }
+
+    /* 最近活动 */
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--color-divider);
+    }
+    .activity-icon {
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      flex-shrink: 0;
+    }
+    .activity-body { flex: 1; min-width: 0; }
+
+    #activity-loader {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      padding: var(--space-lg);
+      color: var(--color-ink-muted);
+      font-size: var(--type-caption);
+    }
+    #activity-loader .ptr-spinner { position: static; }
+
+    /* 退出登录 */
+    .btn-logout {
+      width: 100%;
+      padding: 14px;
+      border-radius: 9999px;
+      background: var(--color-surface);
+      border: 1px solid rgba(224, 154, 154, 0.4);
+      color: var(--color-error);
+      font-weight: 600;
+      font-size: var(--type-body);
+      backdrop-filter: var(--backdrop-glass);
+      margin-top: var(--space-xl);
+      transition: background 180ms var(--ease-soft);
+    }
+    .btn-logout:active { background: var(--color-error-bg); }
+  </style>
+</head>
+<body>
+  <main class="me-page bg-warm" id="me-page">
+    <div class="status-bar-spacer"></div>
+
+    <!-- 下拉刷新指示器 -->
+    <div class="ptr" id="ptr">
+      <span class="ptr-spinner"></span>
+      <span class="ptr-text">下拉刷新</span>
+    </div>
+
+    <!-- 顶部栏 -->
+    <header class="container" style="display:flex; align-items:center; justify-content:space-between; padding-top: var(--space-md); padding-bottom: var(--space-lg);">
+      <div class="page-title">
+        <p class="page-title__en">MY PROFILE</p>
+        <h1 class="page-title__cn text-h1">我的</h1>
+      </div>
+      <!-- 右侧占位：原设置按钮已移除（与下方"常用功能 → 设置"重复），保持布局平衡 -->
+      <span class="header-placeholder" aria-hidden="true"></span>
+    </header>
+
+    <!-- 用户信息卡片 -->
+    <section class="container">
+      <div class="card-glass" style="text-align:center; position:relative;">
+        <button class="avatar-btn" data-open-avatar id="profile-avatar" aria-label="更换头像">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.92;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span class="avatar-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          </span>
+        </button>
+
+        <button class="nickname-edit" data-open-nickname aria-label="编辑昵称">
+          <span id="profile-nickname">晚风散步者</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        </button>
+        <p class="text-caption text-muted" style="margin-top: var(--space-xs);">温柔代号 · 一位路过的风打理人</p>
+
+        <!-- 数据统计 -->
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-num" data-base="12">12</div>
+            <div class="text-caption text-muted">收藏</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-base="48">48</div>
+            <div class="text-caption text-muted">浏览</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-base="3">3</div>
+            <div class="text-caption text-muted">已购</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 功能入口 -->
+    <section class="container" style="margin-top: var(--space-xl);">
+      <h2 class="text-h3" style="margin-bottom: var(--space-md);">常用功能</h2>
+      <div class="func-list">
+        <button class="func-row" data-func="个人资料编辑">
+          <span class="func-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+          <span class="func-label">个人资料编辑</span>
+          <span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+        </button>
+        <button class="func-row" data-func="账号安全设置">
+          <span class="func-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>
+          <span class="func-label">账号安全设置</span>
+          <span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+        </button>
+        <button class="func-row" data-func="消息通知中心">
+          <span class="func-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></span>
+          <span class="func-label">消息通知中心</span>
+          <span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+        </button>
+        <button class="func-row" data-func="我的订单/订阅">
+          <span class="func-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg></span>
+          <span class="func-label">我的订单 / 订阅</span>
+          <span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+        </button>
+        <a href="settings.html" class="func-row" data-func="设置">
+          <span class="func-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span>
+          <span class="func-label">设置</span>
+          <span class="chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 最近活动（上拉加载更多） -->
+    <section class="container" style="margin-top: var(--space-xl);">
+      <h2 class="text-h3" style="margin-bottom: var(--space-md);">最近活动</h2>
+      <div class="card-glass" style="padding: var(--space-lg);">
+        <div id="activity-list"></div>
+        <div id="activity-loader">
+          <span class="ptr-spinner"></span>
+          <span>加载中…</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 退出登录 -->
+    <section class="container" style="padding-bottom: calc(var(--tab-bar-height) + var(--space-3xl) + var(--safe-bottom));">
+      <button class="btn-logout" id="btn-logout">退出登录</button>
+    </section>
+
+    <!-- 底部 Tab 栏 -->
+    <nav class="tab-bar" role="tablist" aria-label="主导航">
+      <span class="tab-indicator" aria-hidden="true"></span>
+      <a href="index.html" class="tab-item" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        罗盘
+      </a>
+      <a href="footprint.html" class="tab-item" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        足迹
+      </a>
+      <a href="me.html" class="tab-item active" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        我的
+      </a>
+    </nav>
+  </main>
+
+  <!-- 更换头像 Sheet -->
+  <div class="modal-backdrop" data-sheet-backdrop="avatar"></div>
+  <div class="modal-sheet" data-sheet="avatar">
+    <div class="sheet-handle"></div>
+    <h2 class="text-h2" style="text-align:center; margin-bottom: var(--space-lg);">更换头像</h2>
+    <div class="media-actions" style="flex-direction:column;">
+      <button class="btn btn-secondary btn-block" data-avatar-action="camera">拍照</button>
+      <button class="btn btn-secondary btn-block" data-avatar-action="album">从相册选择</button>
+      <button class="btn btn-ghost btn-block" data-close-sheet="avatar">取消</button>
+    </div>
+  </div>
+
+  <!-- 编辑昵称 Sheet -->
+  <div class="modal-backdrop" data-sheet-backdrop="nickname"></div>
+  <div class="modal-sheet" data-sheet="nickname">
+    <div class="sheet-handle"></div>
+    <h2 class="text-h2" style="margin-bottom: var(--space-md);">编辑昵称</h2>
+    <p class="text-caption text-secondary" style="margin-bottom: var(--space-sm);">不超过 20 字</p>
+    <input class="input" id="nickname-input" type="text" placeholder="输入新的昵称" maxlength="20" style="margin-bottom: var(--space-xs);">
+    <div style="text-align:right;"><span class="text-caption text-muted" data-nickname-counter>0/20</span></div>
+    <button class="btn btn-primary btn-block" data-save-nickname style="margin-top: var(--space-md);">保存</button>
+    <button class="btn btn-ghost btn-block" data-close-sheet="nickname" style="margin-top: var(--space-xs);">取消</button>
+  </div>
+
+  <script src="js/themes.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/editor-injected.js"></script>
+</body>
+</html>

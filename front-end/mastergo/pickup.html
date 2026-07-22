@@ -1,0 +1,53 @@
+<main data-name="Pickup-Proximity" class="flex flex-col justify-start items-center w-[375px] min-h-[812px] bg-[linear-gradient(180deg,#E8E0F7_0%,#FADADD_45%,#FCE8DE_100%)] p-[24px] gap-[24px]" style="font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif">
+  <!-- 状态栏占位 -->
+  <div data-name="status-bar" class="flex flex-row justify-center items-center w-[327px] h-[24px]"></div>
+
+  <!-- 顶部返回 -->
+  <header data-name="header" class="flex flex-row justify-start items-center gap-[12px] w-[327px]">
+    <div data-name="btn-back" class="flex flex-row justify-center items-center w-[44px] h-[44px] rounded-[44px] bg-[rgba(255,255,255,0.72)] border-[1px] border-[rgba(120,108,160,0.16)]">
+      <i data-name="back-icon" class="fas fa-arrow-left text-[20px] text-[#2C2C2E]"></i>
+    </div>
+    <div data-name="header-title" class="flex flex-col justify-start items-start gap-[4px]">
+      <span data-name="header-nano" class="text-[11px] leading-[14px] font-[500] text-[#8A8A90] text-left tracking-[0.5px] uppercase" style="font-family:'Inter','PingFang SC',sans-serif">PROXIMITY UNLOCK</span>
+      <h1 data-name="header-h1" class="text-[24px] leading-[30px] font-[700] text-[#2C2C2E] text-left" style="font-family:'Inter','PingFang SC',sans-serif">你走进了一份温柔</h1>
+    </div>
+  </header>
+
+  <!-- 近场动画 -->
+  <section data-name="proximity-anim" class="relative flex flex-row justify-center items-center w-[327px] h-[240px]">
+    <div data-name="pulse-ring-1" class="absolute w-[180px] h-[180px] rounded-[180px] border-[1px] border-[rgba(184,169,232,0.30)]"></div>
+    <div data-name="pulse-ring-2" class="absolute w-[180px] h-[180px] rounded-[180px] border-[1px] border-[rgba(184,169,232,0.30)]"></div>
+    <div data-name="pulse-ring-3" class="absolute w-[180px] h-[180px] rounded-[180px] border-[1px] border-[rgba(184,169,232,0.30)]"></div>
+    <div data-name="proximity-center" class="relative flex flex-row justify-center items-center w-[72px] h-[72px] rounded-[72px] bg-[linear-gradient(135deg,#FFFFFF_0%,#F5F1FA_100%)] shadow-[0_8px_32px_rgba(120,104,168,0.10),0_0_24px_rgba(184,169,232,0.28)]">
+      <i data-name="center-heart" class="far fa-heart text-[28px] text-[#B8A9E8]"></i>
+    </div>
+    <span data-name="proximity-distance" class="absolute text-[12px] leading-[18px] font-[400] text-[#54545A] text-center" style="bottom:8px; font-family:'Inter','PingFang SC',sans-serif">距离 8 米 · 正在解锁</span>
+  </section>
+
+  <!-- 微光卡片（自动滑出） -->
+  <article data-name="proximity-card" class="flex flex-col justify-start items-stretch w-[327px] bg-[rgba(255,255,255,0.88)] border-[1px] border-[rgba(120,108,160,0.16)] rounded-[28px] p-[24px] gap-[16px] shadow-[0_-12px_40px_rgba(120,104,168,0.12)]">
+    <div data-name="sheet-handle" class="flex flex-row justify-center items-center w-[40px] h-[4px] rounded-[2px] bg-[rgba(44,44,46,0.24)] self-center"></div>
+
+    <div data-name="mood-media" class="relative flex flex-row justify-center items-center w-[279px] h-[174px] rounded-[20px] overflow-hidden bg-[linear-gradient(135deg,#FADADD_0%,#FCE5D9_100%)]">
+      <img data-name="mood-image" src="{{晚霞橘猫 街角路沿 情绪卡片封面}}" class="absolute w-[279px] h-[174px] object-cover" />
+    </div>
+
+    <div data-name="card-meta-row" class="flex flex-row justify-between items-center w-[279px]">
+      <div data-name="badge-mood-warm" class="flex flex-row justify-center items-center gap-[8px] bg-[rgba(254,206,182,0.72)] rounded-[9999px] p-[6px]">
+        <span data-name="badge-text" class="text-[12px] leading-[16px] font-[500] text-[#9A6A50] text-center" style="font-family:'Inter','PingFang SC',sans-serif">暖意 · 橙</span>
+      </div>
+      <span data-name="card-time" class="text-[12px] leading-[16px] font-[400] text-[#8A8A90] text-right" style="font-family:'Inter','PingFang SC',sans-serif">周二 17:20 · 24°C 微风</span>
+    </div>
+
+    <blockquote data-name="card-quote" class="text-[15px] leading-[24px] font-[400] text-[#54545A] text-left" style="border-left:3px solid #F8C9B0; padding-left:16px; font-family:'Inter','PingFang SC',sans-serif">
+      “今天下班路过这只橘猫，它好像专门在等我。晚霞把影子拉得很长，想把这一刻留给下一位散步的人。”
+    </blockquote>
+
+    <p data-name="card-from" class="text-[12px] leading-[18px] font-[400] text-[#8A8A90] text-left" style="font-family:'Inter','PingFang SC',sans-serif">来自 · 一位路过的风打理人</p>
+
+    <div data-name="btn-receive" class="flex flex-row justify-center items-center gap-[8px] w-[279px] h-[48px] rounded-[9999px] bg-[#B8A9E8] shadow-[0_4px_16px_rgba(120,104,168,0.12)]">
+      <i data-name="receive-icon" class="far fa-heart text-[18px] text-[#FFFFFF]"></i>
+      <span data-name="receive-text" class="text-[15px] leading-[20px] font-[600] text-[#FFFFFF] text-center" style="font-family:'Inter','PingFang SC',sans-serif">接收此温柔</span>
+    </div>
+  </article>
+</main>

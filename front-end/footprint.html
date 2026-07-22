@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#FCFAF7">
+  <title>街角情绪盲盒 · 温柔足迹</title>
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .footprint-page { min-height: 100vh; }
+    .footprint-header { padding: var(--space-md); display: flex; align-items: center; justify-content: space-between; }
+    .weekly-card {
+      background: linear-gradient(135deg, #FADADD 0%, #FCE5D9 55%, #D8E1E9 100%);
+      border-radius: 28px;
+      padding: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: var(--space-lg);
+      box-shadow: 0 12px 40px rgba(245, 200, 216, 0.22);
+    }
+    .weekly-card::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      filter: blur(20px);
+    }
+    .timeline { display: flex; flex-direction: column; gap: var(--space-md); }
+    .timeline-item {
+      display: flex;
+      gap: var(--space-md);
+      align-items: flex-start;
+    }
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.6);
+    }
+    .timeline-content {
+      flex: 1;
+      background: var(--color-surface);
+      backdrop-filter: var(--backdrop-glass);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: var(--space-md);
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+  </style>
+</head>
+<body>
+  <main class="footprint-page bg-warm" id="footprint-page">
+    <div class="status-bar-spacer"></div>
+
+    <!-- 顶部 -->
+    <header class="footprint-header container">
+      <div class="page-title">
+        <p class="page-title__en">PERSONAL SANCTUARY</p>
+        <h1 class="page-title__cn text-h1">温柔足迹</h1>
+      </div>
+      <button class="btn-icon" aria-label="分享" data-share-trigger>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      </button>
+    </header>
+
+    <section class="container" style="padding-bottom: calc(var(--tab-bar-height) + var(--space-3xl) + var(--safe-bottom));">
+      <!-- 本周 AIGC 图卷 -->
+      <div class="weekly-card">
+        <div style="position:relative; z-index:1;">
+          <p class="text-nano" style="color: rgba(44,44,46,0.6); margin-bottom: var(--space-xs);">THIS WEEK</p>
+          <h2 class="text-display" style="margin-bottom: var(--space-sm);">第七周的水彩散步</h2>
+          <p class="text-body text-secondary" style="margin-bottom: var(--space-md);">你收集了 4 份温柔，留下了 2 份给陌生人。本周主色调是暖意橙。</p>
+          <div class="stat-row">
+            <div class="card-metric" style="background: rgba(255,255,255,0.5);">
+              <p class="text-caption text-muted">拾取</p>
+              <p class="text-h2">4</p>
+            </div>
+            <div class="card-metric" style="background: rgba(255,255,255,0.5);">
+              <p class="text-caption text-muted">释放</p>
+              <p class="text-h2">2</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 情绪时间线 -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: var(--space-md);">
+        <h2 class="text-h2">本周时间线</h2>
+        <button class="btn btn-ghost" style="padding: 8px 14px; font-size: var(--type-caption);">查看全部</button>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background: var(--mood-warm);"></div>
+          <div class="timeline-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--space-xs);">
+              <span class="badge badge-mood-warm">暖意 · 拾取</span>
+              <span class="text-caption">今天 17:20</span>
+            </div>
+            <p class="text-body text-secondary">“今天下班路过这只橘猫…” — 一位路过的风打理人</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background: var(--mood-daydream);"></div>
+          <div class="timeline-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--space-xs);">
+              <span class="badge badge-mood-daydream">发呆 · 释放</span>
+              <span class="text-caption">昨天 22:15</span>
+            </div>
+            <p class="text-body text-secondary">“天桥上的路灯像一串没睡醒的月亮。”</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background: var(--mood-sweet);"></div>
+          <div class="timeline-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--space-xs);">
+              <span class="badge badge-mood-sweet">微甜 · 拾取</span>
+              <span class="text-caption">周一 12:40</span>
+            </div>
+            <p class="text-body text-secondary">“咖啡店的窗边，有人画了一朵云。” — 晚风快递员</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background: var(--mood-relaxed);"></div>
+          <div class="timeline-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--space-xs);">
+              <span class="badge badge-mood-relaxed">松弛 · 释放</span>
+              <span class="text-caption">周日 08:30</span>
+            </div>
+            <p class="text-body text-secondary">“清晨公园的长椅上，露水还没下班。”</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 生成图卷入口 -->
+      <button class="btn btn-secondary btn-block" id="btn-generate-chart" style="margin-top: var(--space-xl);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        生成本周情绪图卷
+      </button>
+
+      <!-- 情绪图卷卡片 -->
+      <div class="chart-card" id="weekly-chart-card" hidden>
+        <div class="chart-emoji-wrap" aria-hidden="true">
+          <div class="chart-emoji" id="chart-emoji"></div>
+        </div>
+        <div class="chart-summary">
+          <div>
+            <p class="text-caption text-muted">本周平均情绪指数</p>
+            <p class="text-h1" id="chart-avg">--</p>
+          </div>
+          <div style="text-align:right;">
+            <p class="text-caption text-muted">最常出现的情绪</p>
+            <span class="badge" id="chart-dominant">--</span>
+          </div>
+        </div>
+
+        <div class="chart-canvas-wrap">
+          <canvas id="weekly-chart-canvas" width="700" height="360"></canvas>
+        </div>
+
+        <div class="chart-legend" id="chart-legend">
+          <!-- 图例由 JS 生成 -->
+        </div>
+
+        <div class="chart-actions">
+          <button class="btn btn-secondary" id="btn-export-chart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            保存为图片
+          </button>
+          <button class="btn btn-ghost" id="btn-close-chart">收起图卷</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部 Tab 栏 -->
+    <nav class="tab-bar" role="tablist" aria-label="主导航">
+      <span class="tab-indicator" aria-hidden="true"></span>
+      <a href="index.html" class="tab-item" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        罗盘
+      </a>
+      <a href="footprint.html" class="tab-item active" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        足迹
+      </a>
+      <a href="me.html" class="tab-item" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        我的
+      </a>
+    </nav>
+  </main>
+
+  <script src="js/themes.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/share.js"></script>
+  <script>
+    // 绑定分享入口：根据当前页面动态构建分享数据
+    document.addEventListener('DOMContentLoaded', function () {
+      var trigger = document.querySelector('[data-share-trigger]');
+      if (!trigger || !window.XJShare) return;
+      var summary = document.querySelector('.weekly-card p');
+      var titleEl = document.querySelector('.weekly-card h2');
+      trigger.addEventListener('click', function () {
+        window.XJShare.open({
+          title: (titleEl && titleEl.textContent.trim()) || '温柔足迹',
+          desc: (summary && summary.textContent.trim()) || '把 15 分钟步行圈变成有温度的情绪空间',
+          link: window.location.href,
+          image: 'assets/image/card-img.png',
+          tags: ['街角情绪盲盒', '温柔足迹', '情绪记录']
+        });
+      });
+    });
+  </script>
+  <script src="js/editor-injected.js"></script>
+</body>
+</html>
