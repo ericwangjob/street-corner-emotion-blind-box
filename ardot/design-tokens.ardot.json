@@ -1,0 +1,83 @@
+{
+  "Color": {
+    "variables": {
+      "primary":            { "type": "COLOR", "value": { "r": 0.722, "g": 0.663, "b": 0.910, "a": 1 } },
+      "primary-hover":      { "type": "COLOR", "value": { "r": 0.659, "g": 0.584, "b": 0.878, "a": 1 } },
+      "primary-active":     { "type": "COLOR", "value": { "r": 0.604, "g": 0.522, "b": 0.847, "a": 1 } },
+      "primary-subtle":     { "type": "COLOR", "value": { "r": 0.722, "g": 0.663, "b": 0.910, "a": 0.16 } },
+      "secondary":          { "type": "COLOR", "value": { "r": 0.973, "g": 0.788, "b": 0.690, "a": 1 } },
+      "accent-pink":        { "type": "COLOR", "value": { "r": 0.961, "g": 0.784, "b": 0.847, "a": 1 } },
+      "accent-blue":        { "type": "COLOR", "value": { "r": 0.722, "g": 0.831, "b": 0.941, "a": 1 } },
+      "accent-mint":        { "type": "COLOR", "value": { "r": 0.722, "g": 0.898, "b": 0.847, "a": 1 } },
+      "brand-dark":         { "type": "COLOR", "value": { "r": 0.353, "g": 0.290, "b": 0.541, "a": 1 } },
+      "ink":                { "type": "COLOR", "value": { "r": 0.173, "g": 0.173, "b": 0.180, "a": 1 } },
+      "ink-secondary":      { "type": "COLOR", "value": { "r": 0.173, "g": 0.173, "b": 0.180, "a": 0.72 } },
+      "ink-muted":          { "type": "COLOR", "value": { "r": 0.173, "g": 0.173, "b": 0.180, "a": 0.48 } },
+      "ink-subtle":         { "type": "COLOR", "value": { "r": 0.173, "g": 0.173, "b": 0.180, "a": 0.24 } },
+      "background":         { "type": "COLOR", "value": { "r": 0.973, "g": 0.965, "b": 0.988, "a": 1 } },
+      "background-warm":    { "type": "COLOR", "value": { "r": 0.988, "g": 0.980, "b": 0.969, "a": 1 } },
+      "surface":            { "type": "COLOR", "value": { "r": 1.000, "g": 1.000, "b": 1.000, "a": 0.72 } },
+      "surface-solid":      { "type": "COLOR", "value": { "r": 1.000, "g": 1.000, "b": 1.000, "a": 1 } },
+      "surface-elevated":   { "type": "COLOR", "value": { "r": 1.000, "g": 1.000, "b": 1.000, "a": 0.88 } },
+      "border":             { "type": "COLOR", "value": { "r": 0.471, "g": 0.424, "b": 0.627, "a": 0.14 } },
+      "border-strong":      { "type": "COLOR", "value": { "r": 0.471, "g": 0.424, "b": 0.627, "a": 0.28 } },
+      "divider":            { "type": "COLOR", "value": { "r": 0.471, "g": 0.424, "b": 0.627, "a": 0.10 } },
+      "success":            { "type": "COLOR", "value": { "r": 0.494, "g": 0.800, "b": 0.722, "a": 1 } },
+      "warning":            { "type": "COLOR", "value": { "r": 0.949, "g": 0.776, "b": 0.541, "a": 1 } },
+      "error":              { "type": "COLOR", "value": { "r": 0.878, "g": 0.604, "b": 0.604, "a": 1 } },
+      "info":               { "type": "COLOR", "value": { "r": 0.545, "g": 0.737, "b": 0.910, "a": 1 } },
+      "shadow-primary":     { "type": "COLOR", "value": { "r": 0.471, "g": 0.408, "b": 0.659, "a": 0.12 } },
+      "shadow-deep":        { "type": "COLOR", "value": { "r": 0.353, "g": 0.290, "b": 0.541, "a": 0.16 } },
+      "shadow-glow":        { "type": "COLOR", "value": { "r": 0.722, "g": 0.663, "b": 0.910, "a": 0.28 } }
+    }
+  },
+  "Mood": {
+    "variables": {
+      "mood-relaxed":   { "type": "COLOR", "value": { "r": 0.847, "g": 0.886, "b": 0.863, "a": 1 } },
+      "mood-sweet":     { "type": "COLOR", "value": { "r": 1.000, "g": 0.898, "b": 0.851, "a": 1 } },
+      "mood-daydream":  { "type": "COLOR", "value": { "r": 0.847, "g": 0.882, "b": 0.914, "a": 1 } },
+      "mood-warm":      { "type": "COLOR", "value": { "r": 0.996, "g": 0.808, "b": 0.714, "a": 1 } }
+    }
+  },
+  "GradientStops": {
+    "variables": {
+      "g-hero-top":     { "type": "COLOR", "value": { "r": 0.910, "g": 0.878, "b": 0.969, "a": 1 } },
+      "g-hero-mid":     { "type": "COLOR", "value": { "r": 0.980, "g": 0.855, "b": 0.867, "a": 1 } },
+      "g-hero-bot":     { "type": "COLOR", "value": { "r": 0.988, "g": 0.910, "b": 0.871, "a": 1 } },
+      "g-mood-pink-a":  { "type": "COLOR", "value": { "r": 0.980, "g": 0.855, "b": 0.867, "a": 1 } },
+      "g-mood-pink-b":  { "type": "COLOR", "value": { "r": 0.988, "g": 0.898, "b": 0.851, "a": 1 } },
+      "g-mood-blue-a":  { "type": "COLOR", "value": { "r": 0.847, "g": 0.882, "b": 0.914, "a": 1 } },
+      "g-mood-blue-b":  { "type": "COLOR", "value": { "r": 0.839, "g": 0.918, "b": 0.973, "a": 1 } },
+      "g-mood-orange-a":{ "type": "COLOR", "value": { "r": 0.996, "g": 0.808, "b": 0.714, "a": 1 } },
+      "g-mood-orange-b":{ "type": "COLOR", "value": { "r": 0.976, "g": 0.847, "b": 0.769, "a": 1 } }
+    }
+  },
+  "Spacing": {
+    "variables": {
+      "space-xxs": { "type": "FLOAT", "value": 4 },
+      "space-xs":  { "type": "FLOAT", "value": 8 },
+      "space-sm":  { "type": "FLOAT", "value": 12 },
+      "space-md":  { "type": "FLOAT", "value": 16 },
+      "space-lg":  { "type": "FLOAT", "value": 24 },
+      "space-xl":  { "type": "FLOAT", "value": 32 },
+      "space-2xl": { "type": "FLOAT", "value": 48 },
+      "space-3xl": { "type": "FLOAT", "value": 64 }
+    }
+  },
+  "Radius": {
+    "variables": {
+      "radius-pill":    { "type": "FLOAT", "value": 9999 },
+      "radius-card":    { "type": "FLOAT", "value": 24 },
+      "radius-card-sm": { "type": "FLOAT", "value": 20 },
+      "radius-card-lg": { "type": "FLOAT", "value": 28 },
+      "radius-sheet":   { "type": "FLOAT", "value": 32 },
+      "radius-input":   { "type": "FLOAT", "value": 9999 }
+    }
+  },
+  "Typography": {
+    "variables": {
+      "font-sans": { "type": "STRING", "value": "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif" },
+      "font-mono": { "type": "STRING", "value": "'SF Mono', Menlo, Monaco, 'Courier New', monospace" }
+    }
+  }
+}

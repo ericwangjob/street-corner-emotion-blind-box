@@ -1058,24 +1058,7 @@
       language: { 'zh-CN': '简体中文', 'zh-TW': '繁體中文', en: 'English' }
     };
 
-    // 主题选择即时保存
-    $$('input[data-radio="theme"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        const val = radio.value;
-        const label = labels.theme[val] || val;
-        const display = $('#theme-value');
-        if (display) display.textContent = label;
-        document.documentElement.setAttribute('data-theme-mode', val);
-        if (val === 'dark') document.documentElement.classList.add('dark');
-        else if (val === 'light') document.documentElement.classList.remove('dark');
-        else {
-          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.classList.toggle('dark', prefersDark);
-        }
-        showToast(`主题已切换为：${label}`);
-      });
-    });
-
+    // 主题选择已由 js/theme-toggle.js 统一管理（持久化 / 跟随系统 / 同步文案）
     // 语言选择即时保存
     $$('input[data-radio="language"]').forEach(radio => {
       radio.addEventListener('change', () => {
@@ -1322,9 +1305,10 @@
       const ctx = canvas.getContext('2d');
       const W = canvas.width, H = canvas.height;
       ctx.clearRect(0, 0, W, H);
+      const D = document.documentElement.classList.contains('dark');
       const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, 'rgba(255,255,255,0.85)');
-      bg.addColorStop(1, 'rgba(250,248,247,0.65)');
+      bg.addColorStop(0, D ? 'rgba(36,32,48,1)' : 'rgba(255,255,255,0.85)');
+      bg.addColorStop(1, D ? 'rgba(28,25,38,1)' : 'rgba(250,248,247,0.65)');
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, W, H);
 
@@ -1338,13 +1322,13 @@
       ctx.font = '11px -apple-system, "PingFang SC", sans-serif';
       for (let v = 0; v <= 5; v++) {
         const y = yFor(v, padT, plotH);
-        ctx.strokeStyle = 'rgba(120,120,140,0.12)';
+        ctx.strokeStyle = D ? 'rgba(200,190,230,0.12)' : 'rgba(120,120,140,0.12)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(padL, y);
         ctx.lineTo(W - padR, y);
         ctx.stroke();
-        ctx.fillStyle = 'rgba(120,120,140,0.55)';
+        ctx.fillStyle = D ? 'rgba(200,190,230,0.6)' : 'rgba(120,120,140,0.55)';
         ctx.fillText(String(v), padL - 10, y);
       }
 
@@ -1383,31 +1367,31 @@
           ctx.fillStyle = info.color;
           ctx.fill();
           ctx.lineWidth = 2;
-          ctx.strokeStyle = '#fff';
+          ctx.strokeStyle = D ? '#242030' : '#fff';
           ctx.stroke();
-          ctx.fillStyle = '#6b6b70';
+          ctx.fillStyle = D ? 'rgba(200,190,230,0.85)' : '#6b6b70';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
           ctx.font = '12px -apple-system, "PingFang SC", sans-serif';
           ctx.fillText(info.label, cx, top - 10);
         } else {
           const top = padT + plotH - 8;
-          ctx.fillStyle = 'rgba(201,201,208,0.35)';
+          ctx.fillStyle = D ? 'rgba(200,190,230,0.18)' : 'rgba(201,201,208,0.35)';
           roundRect(ctx, bx, top, bw, 8, 4);
           ctx.fill();
-          ctx.fillStyle = GREY;
+          ctx.fillStyle = D ? '#8A8499' : GREY;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.font = '11px -apple-system, "PingFang SC", sans-serif';
           ctx.fillText('无记录', cx, padT + plotH / 2);
         }
 
-        ctx.fillStyle = '#8a8a92';
+        ctx.fillStyle = D ? 'rgba(200,190,230,0.7)' : '#8a8a92';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         ctx.font = '11px -apple-system, "PingFang SC", sans-serif';
         ctx.fillText(d.weekday, cx, padT + plotH + 12);
-        ctx.fillStyle = '#b0b0b8';
+        ctx.fillStyle = D ? 'rgba(200,190,230,0.5)' : '#b0b0b8';
         ctx.font = '10px -apple-system, "PingFang SC", sans-serif';
         ctx.fillText(d.date, cx, padT + plotH + 28);
       });
@@ -1443,7 +1427,7 @@
       domEl.textContent = sum.dominant;
       if (sum.dominantKey) {
         domEl.style.background = MOODS[sum.dominantKey].color;
-        domEl.style.color = '#3a3a3a';
+        domEl.style.color = document.documentElement.classList.contains('dark') ? '#ECEAF4' : '#3a3a3a';
       }
       renderEmoji(sum.dominantKey);
       renderLegend(sum.present);
@@ -1461,18 +1445,19 @@
       out.width = W;
       out.height = headerH + canvas.height + legendH;
       const c = out.getContext('2d');
+      const D = document.documentElement.classList.contains('dark');
       const bg = c.createLinearGradient(0, 0, 0, out.height);
-      bg.addColorStop(0, '#FCFAF7');
-      bg.addColorStop(1, '#F3F1EC');
+      bg.addColorStop(0, D ? '#1E1B2A' : '#FCFAF7');
+      bg.addColorStop(1, D ? '#16131F' : '#F3F1EC');
       c.fillStyle = bg;
       c.fillRect(0, 0, out.width, out.height);
-      c.fillStyle = '#2b2b2b';
+      c.fillStyle = D ? '#ECEAF4' : '#2b2b2b';
       c.textAlign = 'left';
       c.textBaseline = 'middle';
       c.font = 'bold 16px -apple-system, "PingFang SC", sans-serif';
       c.fillText('本周情绪图卷', 24, 22);
       c.font = '12px -apple-system, "PingFang SC", sans-serif';
-      c.fillStyle = '#6b6b70';
+      c.fillStyle = D ? 'rgba(236,234,244,0.72)' : '#6b6b70';
       c.fillText('平均情绪指数 ' + sum.avg + '   ·   最常出现 ' + sum.dominant, 24, 44);
       // 右上角情绪光球
       const emojiType = MOOD_TO_EMOJI[sum.dominantKey];
@@ -1486,7 +1471,7 @@
         c.beginPath();
         c.arc(lx + 5, ly, 5, 0, Math.PI * 2);
         c.fill();
-        c.fillStyle = '#6b6b70';
+        c.fillStyle = D ? 'rgba(236,234,244,0.82)' : '#6b6b70';
         c.textAlign = 'left';
         c.textBaseline = 'middle';
         const label = MOODS[m].label;
@@ -1508,6 +1493,11 @@
     if (btnClose) btnClose.addEventListener('click', () => {
       card.classList.remove('is-visible');
       setTimeout(() => { card.hidden = true; }, 400);
+    });
+
+    // 主题切换时若图卷已生成，按当前主题无缝重绘
+    window.addEventListener('xj:themechange', function () {
+      if (card && !card.hidden) drawChart();
     });
   }
 

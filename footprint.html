@@ -59,6 +59,16 @@
       margin-top: var(--space-md);
     }
   </style>
+  <script>
+    (function () {
+      try {
+        var m = localStorage.getItem('xj_theme_mode') || 'system';
+        var dark = (m === 'dark') || (m !== 'light' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme-mode', m);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <main class="footprint-page bg-warm" id="footprint-page">
@@ -227,5 +237,6 @@
     });
   </script>
   <script src="js/editor-injected.js"></script>
+  <script src="js/theme-toggle.js"></script>
 </body>
 </html>
