@@ -1779,16 +1779,207 @@ img {
   }
 }
 
-/* ---------- 17. Dark mode support (system preference) ---------- */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #1C1A22;
-    --color-background-warm: #1F1D23;
-    --color-ink: #F2F0F7;
-    --color-ink-secondary: rgba(242, 240, 247, 0.72);
-    --color-ink-muted: rgba(242, 240, 247, 0.48);
-    --color-surface: rgba(42, 38, 54, 0.72);
-    --color-surface-elevated: rgba(48, 44, 60, 0.88);
-    --color-border: rgba(200, 190, 230, 0.12);
+/* =========================================================
+   17. 深色模式 — 通过 <html class="dark"> 切换
+   使用 !important 覆盖 themes.js 写入 <html> 的内联变量
+   （themes.js 以 inline style 设置 --color-*，普通选择器
+    无法覆盖，必须以 !important 取胜）
+   时间维度的品牌强调色（--color-primary / --bg-orb-* 水波纹等）
+   仍由 themes.js 控制，故此处不覆盖，保留时段氛围。
+   ========================================================= */
+html.dark {
+  /* 背景与表面 */
+  --color-background: #15131F !important;
+  --color-background-warm: #1A1726 !important;
+  --color-surface: rgba(42, 38, 54, 0.72) !important;
+  --color-surface-solid: #221E2E !important;
+  --color-surface-elevated: rgba(48, 44, 60, 0.92) !important;
+  --color-border: rgba(200, 190, 230, 0.14) !important;
+  --color-border-strong: rgba(200, 190, 230, 0.28) !important;
+  --color-divider: rgba(200, 190, 230, 0.10) !important;
+
+  /* 文字 */
+  --color-ink: #ECEAF4 !important;
+  --color-ink-secondary: rgba(236, 234, 244, 0.72) !important;
+  --color-ink-muted: rgba(236, 234, 244, 0.48) !important;
+  --color-ink-subtle: rgba(236, 234, 244, 0.24) !important;
+  /* 品牌深紫在暗底上提亮，保证可读 */
+  --color-brand-dark: #C9BCE8 !important;
+
+  /* 语义色：暗底上稍提亮 */
+  --color-success: #8BDCC6 !important;
+  --color-warning: #F4CF95 !important;
+  --color-error: #E9A6A6 !important;
+  --color-info: #9CC8EE !important;
+
+  /* 阴影：暗底改用更深的黑，保留品牌辉光但减弱 */
+  --shadow-color-primary: rgba(0, 0, 0, 0.40) !important;
+  --shadow-color-deep: rgba(0, 0, 0, 0.55) !important;
+  --shadow-color-glow: rgba(184, 169, 232, 0.22) !important;
+
+  /* 背景光球 / 水波纹：暗底上降低不透明度，避免过曝 */
+  --bg-orb-1: rgba(184, 169, 232, 0.16) !important;
+  --bg-orb-2: rgba(248, 201, 176, 0.12) !important;
+  --bg-orb-3: rgba(184, 212, 240, 0.12) !important;
+  --ripple-bg-start: rgba(184, 169, 232, 0.16) !important;
+  --ripple-bg-end: rgba(184, 169, 232, 0.04) !important;
+}
+
+/* ---------- 17.1 组件级暗色覆写（硬写死的颜色） ---------- */
+/* 按钮：暗底上浅色强调按钮改用深色文字，满足对比度 */
+html.dark .btn-primary,
+html.dark .btn-fab { color: #15131F !important; }
+
+/* 卡片玻璃：暗底磨砂玻璃 + 极弱顶部高光，深色投影 */
+html.dark .card-glass,
+html.dark .card-glass:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--shadow-color-glow) 40%, transparent),
+    0 2px 6px color-mix(in srgb, var(--shadow-color-glow) 30%, transparent),
+    0 8px 16px color-mix(in srgb, var(--shadow-color-glow) 22%, transparent),
+    0 14px 24px rgba(0, 0, 0, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+@supports not (color: color-mix(in srgb, red, transparent)) {
+  html.dark .card-glass,
+  html.dark .card-glass:hover {
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  }
+}
+
+/* 拾取卡：暗底磨砂玻璃 */
+html.dark .proximity-card {
+  background: linear-gradient(180deg, rgba(40, 36, 52, 0.94) 0%, rgba(30, 27, 42, 0.90) 100%) !important;
+}
+
+/* 情绪卡：暗底渐变 */
+html.dark .card-mood {
+  background: linear-gradient(135deg, #2E2A3C 0%, #3A2E44 100%) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* pick 队列小标 */
+html.dark .pickup-queue-indicator {
+  background: rgba(42, 38, 54, 0.70) !important;
+}
+
+/* 媒体覆盖：底部暗叠加增强文字可读 + 失败回退暗渐变 */
+html.dark .media-cover::after {
+  background: linear-gradient(180deg, transparent 40%, rgba(21, 19, 31, 0.50) 100%) !important;
+}
+html.dark .media-cover {
+  background: linear-gradient(135deg, #2A2636 0%, #221E2E 100%) !important;
+}
+
+/* 图表卡片 / 画布包裹 */
+html.dark .chart-card {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+html.dark .chart-canvas-wrap {
+  background: linear-gradient(180deg, rgba(40, 36, 52, 0.70) 0%, rgba(30, 27, 42, 0.60) 100%) !important;
+}
+html.dark .chart-emoji {
+  filter: drop-shadow(0 7px 22px rgba(184, 169, 232, 0.28)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.30)) !important;
+}
+
+/* 输入框 */
+html.dark .input,
+html.dark .textarea { background: rgba(36, 32, 48, 0.80) !important; }
+
+/* 模态 sheet */
+html.dark .modal-sheet {
+  background: rgba(30, 27, 42, 0.96) !important;
+}
+
+/* 罗盘中心 */
+html.dark .compass-center {
+  background: linear-gradient(135deg, #322C42 0%, #252030 100%) !important;
+}
+
+/* 媒体捕捉移除按钮 */
+html.dark .capture-remove { background: rgba(42, 38, 54, 0.92) !important; }
+html.dark .capture-remove:hover { background: #322C42 !important; }
+
+/* 装饰背景 */
+html.dark .bg-hero {
+  background: linear-gradient(180deg, #221E30 0%, #2A2436 45%, #322A3A 100%) !important;
+}
+html.dark .bg-warm {
+  background: linear-gradient(180deg, #1A1726 0%, #16131F 100%) !important;
+}
+
+/* 足迹页本周水彩卡片：暗底重写（内联渐变 / 白块需 !important 覆盖） */
+html.dark .weekly-card {
+  background: linear-gradient(135deg, #2E2A3C 0%, #3A2E44 55%, #2A3340 100%) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35) !important;
+}
+html.dark .weekly-card::before { background: rgba(255, 255, 255, 0.06) !important; }
+html.dark .weekly-card .text-nano { color: rgba(236, 234, 244, 0.6) !important; }
+html.dark .weekly-card .text-secondary { color: rgba(236, 234, 244, 0.72) !important; }
+html.dark .weekly-card .card-metric { background: rgba(42, 38, 54, 0.50) !important; }
+html.dark .timeline-dot { box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.35) !important; }
+
+/* ---------- 17.2 平滑主题过渡（仅在 .theme-anim 后生效，避免首屏闪烁） ---------- */
+html.theme-anim body,
+html.theme-anim .page,
+html.theme-anim .card-glass,
+html.theme-anim .card-mood,
+html.theme-anim .btn,
+html.theme-anim .btn-primary,
+html.theme-anim .btn-secondary,
+html.theme-anim .btn-ghost,
+html.theme-anim .input,
+html.theme-anim .textarea,
+html.theme-anim .tab-bar,
+html.theme-anim .top-pill,
+html.theme-anim .modal-sheet,
+html.theme-anim .modal-backdrop,
+html.theme-anim .chart-card,
+html.theme-anim .chart-canvas-wrap,
+html.theme-anim .proximity-card,
+html.theme-anim .media-cover,
+html.theme-anim .compass-center,
+html.theme-anim .settings-card,
+html.theme-anim .settings-row,
+html.theme-anim .pickup-queue-indicator {
+  transition:
+    background-color 280ms var(--ease-soft),
+    color 280ms var(--ease-soft),
+    border-color 280ms var(--ease-soft),
+    box-shadow 280ms var(--ease-soft) !important;
+}
+/* 保留关键 hover/active 的 transform 过渡 */
+html.theme-anim .card-glass { transition: background-color 280ms var(--ease-soft), border-color 280ms var(--ease-soft), box-shadow 300ms var(--ease-soft), transform 300ms var(--ease-soft), color 280ms var(--ease-soft) !important; }
+html.theme-anim .btn { transition: transform 180ms var(--ease-soft), box-shadow 180ms var(--ease-soft), background 180ms var(--ease-soft), background-color 180ms var(--ease-soft), color 180ms var(--ease-soft), border-color 180ms var(--ease-soft) !important; }
+html.theme-anim .chart-card { transition: opacity 400ms var(--ease-soft), transform 400ms var(--ease-soft), background-color 280ms var(--ease-soft), border-color 280ms var(--ease-soft) !important; }
+html.theme-anim .modal-sheet { transition: transform 280ms var(--ease-soft), background-color 280ms var(--ease-soft) !important; }
+html.theme-anim .compass-center { transition: transform 250ms var(--ease-soft), box-shadow 250ms var(--ease-soft), background-color 250ms var(--ease-soft) !important; }
+
+/* 尊重"减少动态"偏好：关闭主题过渡 */
+@media (prefers-reduced-motion: reduce) {
+  html.theme-anim body,
+  html.theme-anim .page,
+  html.theme-anim .card-glass,
+  html.theme-anim .card-mood,
+  html.theme-anim .btn,
+  html.theme-anim .btn-primary,
+  html.theme-anim .btn-secondary,
+  html.theme-anim .btn-ghost,
+  html.theme-anim .input,
+  html.theme-anim .textarea,
+  html.theme-anim .tab-bar,
+  html.theme-anim .top-pill,
+  html.theme-anim .modal-sheet,
+  html.theme-anim .modal-backdrop,
+  html.theme-anim .chart-card,
+  html.theme-anim .chart-canvas-wrap,
+  html.theme-anim .proximity-card,
+  html.theme-anim .media-cover,
+  html.theme-anim .compass-center,
+  html.theme-anim .settings-card,
+  html.theme-anim .settings-row,
+  html.theme-anim .pickup-queue-indicator {
+    transition: none !important;
   }
 }

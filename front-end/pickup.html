@@ -20,6 +20,16 @@
     .pulse-ring:nth-child(2) { animation-delay: 0.8s; }
     .pulse-ring:nth-child(3) { animation-delay: 1.6s; }
   </style>
+  <script>
+    (function () {
+      try {
+        var m = localStorage.getItem('xj_theme_mode') || 'system';
+        var dark = (m === 'dark') || (m !== 'light' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme-mode', m);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <main class="pickup-page bg-canvas" id="pickup-page">
@@ -110,5 +120,6 @@
     }, 1200);
   </script>
   <script src="js/editor-injected.js"></script>
+  <script src="js/theme-toggle.js"></script>
 </body>
 </html>
