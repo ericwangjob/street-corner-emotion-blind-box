@@ -409,7 +409,7 @@
       title: document.title || '街角情绪盲盒',
       desc: '把 15 分钟步行圈变成有温度的情绪空间',
       link: window.location.href,
-      image: 'assets/image/card-img.png',
+      image: 'assets/image/card-img.jpg',
       tags: []
     }, userPayload || {});
     activeSheet = buildSheet(payload);

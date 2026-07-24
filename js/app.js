@@ -201,7 +201,7 @@
   const PICKUP_QUEUE = [
     {
       // ① 拟人 · 长铺短收 · 视觉 · 黄昏街角 · 第一人称观察 · 等待的小确幸
-      img: 'assets/image/card-img.png',
+      img: 'assets/image/card-img.jpg',
       alt: '黄昏街角的路灯下，一只橘猫眯着眼，影子被拉成一条长线',
       mood: '暖意 · 橙',
       moodClass: 'badge-mood-warm',
@@ -723,7 +723,7 @@
     // 拍照：仅显示预设示意图，不调用真实摄像头、文件选择或保存功能
     if (cameraBtn) {
       cameraBtn.addEventListener('click', () => {
-        imagePreview.src = 'assets/image/uploading image.png';
+        imagePreview.src = 'assets/image/uploading image.jpg';
         setState('image');
         vibrate([30, 60, 30]);
         showToast('照片示意图已添加');
