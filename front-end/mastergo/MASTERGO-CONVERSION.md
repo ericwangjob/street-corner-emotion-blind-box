@@ -130,7 +130,7 @@
 
 | 文件 | 图层 `data-name` | 占位 `{{keyword}}` | 原始资源 / 来源 | 说明 |
 |---|---|---|---|---|
-| `pickup.html` | `mood-image` | `{{晚霞橘猫 街角路沿 情绪卡片封面}}` | `front-end/assets/image/card-img.png` | **唯一真实位图资源**；原稿为街角橘猫插画（源为内联 SVG），导入时可替换为真实照片 |
+| `pickup.html` | `mood-image` | `{{晚霞橘猫 街角路沿 情绪卡片封面}}` | `front-end/assets/image/card-img.jpg` | **唯一真实位图资源**；原稿为街角橘猫插画（源为内联 SVG），导入时可替换为真实照片 |
 | `release.html` | `capture-preview` | `{{上传的情绪照片 街角瞬间}}` | （用户拍摄，无源文件） | 占位，待拍照 / 录音后填充；默认 `opacity-0` 隐藏 |
 | `footprint.html` | `chart-image` | `{{本周情绪图卷 柱状折线 暖意橙主色}}` | （AIGC 动态生成） | 情绪图卷，AI 生成的柱状 + 折线图，无静态源 |
 
