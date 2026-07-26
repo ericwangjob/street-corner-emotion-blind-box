@@ -126,10 +126,15 @@
   function initMoodSelector() {
     $$('.mood-option').forEach(option => {
       option.addEventListener('click', () => {
-        $$('.mood-option').forEach(o => o.classList.remove('selected'));
+        $$('.mood-option').forEach(o => {
+          o.classList.remove('selected');
+          o.setAttribute('aria-checked', 'false');
+        });
         option.classList.add('selected');
+        option.setAttribute('aria-checked', 'true');
         const input = $('input[name="mood"]');
         if (input) input.value = option.dataset.mood;
+        validateRelease();
       });
     });
   }
@@ -368,24 +373,121 @@
   }
 
   // ===== 提交发布 =====
+  let releaseLocked = false;
+
+  function checkReleaseState() {
+    const capture = $('#media-capture');
+    const mood = $('input[name="mood"]');
+    const note = $('textarea[name="note"]');
+    const hasMedia = !!capture && capture.dataset.state !== 'empty';
+    const hasMood = !!mood && mood.value.trim() !== '';
+    const hasText = !!note && note.value.trim() !== '';
+    return { hasMedia, hasMood, hasText, ready: hasMedia && hasMood && hasText };
+  }
+
+  // ===== 发布页提交校验：三条件全部满足才可提交 =====
+  function validateRelease() {
+    const btn = $('#btn-submit');
+    if (!btn || releaseLocked) return;
+    const { hasMedia, hasMood, hasText } = checkReleaseState();
+    const ready = hasMedia && hasMood && hasText;
+    if (ready) btn.removeAttribute('aria-disabled');
+    else btn.setAttribute('aria-disabled', 'true');
+  }
+
+  // ===== 发布页：缺失项清单提示 =====
+  function showReleaseTodoSheet() {
+    const sheet = $('#releaseTodoSheet');
+    const backdrop = $('#releaseTodoBackdrop');
+    const list = $('#releaseTodoList');
+    if (!sheet || !backdrop || !list) return;
+    const { hasMedia, hasMood, hasText } = checkReleaseState();
+
+    const items = [];
+    if (!hasMedia) {
+      items.push({
+        icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>',
+        title: '拍一张照片或录一段声音',
+        desc: '留下此刻的环境，二选一即可',
+        target: '#btn-camera'
+      });
+    }
+    if (!hasMood) {
+      items.push({
+        icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle></svg>',
+        title: '选择一种情绪颜色',
+        desc: '决定光点在地图上的颜色',
+        target: '.mood-options'
+      });
+    }
+    if (!hasText) {
+      items.push({
+        icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
+        title: '留一句轻柔的话',
+        desc: '写给下一位路过的人',
+        target: 'textarea[name="note"]'
+      });
+    }
+
+    list.innerHTML = items.map(item => `
+      <li>
+        <button type="button" class="release-todo-item" data-target="${item.target}">
+          <span class="release-todo-icon" aria-hidden="true">${item.icon}</span>
+          <span class="release-todo-body">
+            <span class="release-todo-title">${item.title}</span>
+            <span class="release-todo-desc">${item.desc}</span>
+          </span>
+          <span class="release-todo-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </span>
+        </button>
+      </li>
+    `).join('');
+
+    backdrop.classList.add('open');
+    sheet.classList.add('open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Move focus to the close button for accessibility
+    requestAnimationFrame(() => {
+      const closeBtn = $('#releaseTodoClose');
+      if (closeBtn) closeBtn.focus({ preventScroll: true });
+    });
+  }
+
+  function closeReleaseTodoSheet() {
+    const sheet = $('#releaseTodoSheet');
+    const backdrop = $('#releaseTodoBackdrop');
+    if (!sheet || !backdrop) return;
+    sheet.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    sheet.setAttribute('aria-hidden', 'true');
+  }
+
   function initReleaseForm() {
     const form = $('#release-form');
     if (!form) return;
 
+    const note = $('textarea[name="note"]');
+    if (note) note.addEventListener('input', validateRelease);
+
     form.addEventListener('submit', e => {
       e.preventDefault();
-      const mood = $('input[name="mood"]')?.value;
-      if (!mood) {
-        showToast('请先选择一种情绪颜色');
+      const state = checkReleaseState();
+      if (!state.ready) {
+        showReleaseTodoSheet();
         return;
       }
 
-      const btn = form.querySelector('button[type="submit"]');
+      const btn = $('#btn-submit');
       const rect = btn.getBoundingClientRect();
       burstParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 16);
       vibrate([50, 200, 50, 200, 50]);
 
-      btn.disabled = true;
+      releaseLocked = true;
+      btn.setAttribute('aria-disabled', 'true');
       btn.innerHTML = '正在封存…';
 
       setTimeout(() => {
@@ -396,6 +498,46 @@
         }, 1200);
       }, 1200);
     });
+
+    // 待办 sheet 的打开/关闭/跳转交互
+    const sheet = $('#releaseTodoSheet');
+    if (sheet) {
+      const closeBtn = $('#releaseTodoClose');
+      const backdrop = $('#releaseTodoBackdrop');
+      const confirmBtn = $('#releaseTodoConfirm');
+      const list = $('#releaseTodoList');
+
+      if (closeBtn) closeBtn.addEventListener('click', closeReleaseTodoSheet);
+      if (backdrop) backdrop.addEventListener('click', closeReleaseTodoSheet);
+      if (confirmBtn) confirmBtn.addEventListener('click', closeReleaseTodoSheet);
+      if (list) {
+        list.addEventListener('click', e => {
+          const item = e.target.closest('.release-todo-item');
+          if (!item) return;
+          const target = item.dataset.target;
+          closeReleaseTodoSheet();
+          if (target) {
+            const el = $(target);
+            if (el) {
+              setTimeout(() => {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const originalShadow = el.style.boxShadow;
+                el.style.transition = 'box-shadow 800ms var(--ease-soft)';
+                el.style.boxShadow = '0 0 0 4px rgba(120, 104, 168, 0.32)';
+                setTimeout(() => { el.style.boxShadow = originalShadow; }, 900);
+              }, 320);
+            }
+          }
+        });
+      }
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && sheet.classList.contains('open')) {
+          closeReleaseTodoSheet();
+        }
+      });
+    }
+
+    validateRelease();
   }
 
   // ===== Toast =====
@@ -453,6 +595,17 @@
           activeItem = item;
         } else {
           item.setAttribute('aria-selected', 'false');
+        }
+
+        if (typeof window.XJAuth !== 'undefined' && XJAuth.isGuestMode) {
+          const href = item.getAttribute('href') || item.dataset.href;
+          if (href === 'footprint.html' || href === 'me.html') {
+            item.addEventListener('click', e => {
+              e.preventDefault();
+              XJAuth.guardGuest('footprint.html');
+            });
+            return;
+          }
         }
 
         // Tactile press feedback before navigation
@@ -711,6 +864,7 @@
     function setState(state) {
       capture.dataset.state = state;
       capture.classList.toggle('has-media', state !== 'empty');
+      validateRelease();
     }
 
     function formatTime(seconds) {
@@ -918,8 +1072,17 @@
     const logout = $('#btn-logout');
     if (logout) {
       logout.addEventListener('click', () => {
-        if (typeof confirm === 'function' && confirm('确定要退出登录吗？')) {
-          showToast('已退出登录');
+        // 项目风格二次确认弹窗，确认后走统一退出逻辑 → auth.html
+        if (window.XJAuth && typeof XJAuth.confirmLogout === 'function') {
+          XJAuth.confirmLogout({ redirectTo: 'auth.html' });
+        } else if (window.XJAuth && XJAuth.dispatchLogout) {
+          XJAuth.dispatchLogout('auth.html', { skipPrompt: true });
+        } else {
+          try {
+            localStorage.removeItem('xj_account');
+            localStorage.removeItem('xj_guest');
+          } catch (e) {}
+          window.location.href = 'auth.html';
         }
       });
     }
@@ -979,73 +1142,6 @@
       }
       setTimeout(() => { ptr.style.transition = ''; }, 220);
     }, { passive: true });
-  }
-
-  // ===== 我的页面：上拉加载更多 =====
-  function initInfiniteScroll() {
-    const list = $('#activity-list');
-    if (!list) return;
-    const pool = [
-      { color: 'var(--mood-sweet)', title: '你收藏了一份温柔', desc: '微甜 · 咖啡店的窗边云朵', time: '2 小时前' },
-      { color: 'var(--mood-daydream)', title: '你浏览了晚霞盲盒', desc: '发呆 · 天桥上的月亮', time: '昨天' },
-      { color: 'var(--mood-warm)', title: '你解锁了暖意盲盒', desc: '暖意 · 橘猫与晚霞', time: '昨天' },
-      { color: 'var(--mood-relaxed)', title: '你种下了一份温柔', desc: '松弛 · 清晨公园长椅', time: '3 天前' },
-      { color: 'var(--color-primary)', title: '收到一条新温柔提醒', desc: '附近有人留下了善意', time: '3 天前' },
-      { color: 'var(--mood-sweet)', title: '你收藏了发呆盲盒', desc: '发呆 · 河流与风声', time: '上周' },
-    ];
-    let loading = false, page = 0;
-    const maxPages = 4;
-
-    function makeSpinner() {
-      const s = document.createElement('span');
-      s.className = 'ptr-spinner';
-      return s;
-    }
-
-    function createItem(d) {
-      const item = document.createElement('div');
-      item.className = 'activity-item animate-fade-in-up';
-      item.innerHTML = `
-        <div class="activity-icon" style="background:${d.color};"></div>
-        <div class="activity-body">
-          <p class="text-body" style="font-weight:600;">${d.title}</p>
-          <p class="text-caption text-secondary">${d.desc}</p>
-        </div>
-        <span class="text-caption text-muted" style="flex-shrink:0;">${d.time}</span>`;
-      return item;
-    }
-
-    function loadMore() {
-      const loader = $('#activity-loader');
-      if (loading || page >= maxPages) {
-        if (loader && page >= maxPages) loader.textContent = '没有更多了';
-        return;
-      }
-      loading = true;
-      if (loader) {
-        loader.style.display = 'flex';
-        loader.textContent = '';
-        loader.appendChild(makeSpinner());
-      }
-      setTimeout(() => {
-        const start = (page * 2) % pool.length;
-        pool.slice(start, start + 2).forEach(d => list.appendChild(createItem(d)));
-        page++;
-        loading = false;
-        if (loader) {
-          loader.style.display = 'none';
-          if (page >= maxPages) loader.textContent = '没有更多了';
-        }
-      }, 700);
-    }
-
-    window.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 120) {
-        loadMore();
-      }
-    }, { passive: true });
-
-    loadMore();
   }
 
   // ===== 设置页 =====
@@ -1134,8 +1230,17 @@
     const logout = $('#settings-logout');
     if (logout) {
       logout.addEventListener('click', () => {
-        if (typeof confirm === 'function' && confirm('确定要退出登录吗？')) {
-          showToast('已退出登录');
+        // 项目风格二次确认弹窗，确认后走统一退出逻辑 → auth.html
+        if (window.XJAuth && typeof XJAuth.confirmLogout === 'function') {
+          XJAuth.confirmLogout({ redirectTo: 'auth.html' });
+        } else if (window.XJAuth && XJAuth.dispatchLogout) {
+          XJAuth.dispatchLogout('auth.html', { skipPrompt: true });
+        } else {
+          try {
+            localStorage.removeItem('xj_account');
+            localStorage.removeItem('xj_guest');
+          } catch (e) {}
+          window.location.href = 'auth.html';
         }
       });
     }
@@ -1523,7 +1628,6 @@
     initMediaCapture();
     initProfile();
     initPullToRefresh();
-    initInfiniteScroll();
     initSettings();
     initWeeklyChart();
   }

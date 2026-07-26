@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#E8E0F7">
+  <title>街角情绪盲盒 · 欢迎</title>
+  <link rel="stylesheet" href="css/design-system.css">
+  <style>
+    .onb {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      padding: calc(env(safe-area-inset-top, 12px) + var(--space-lg)) var(--space-lg) calc(var(--safe-bottom) + var(--space-xl));
+      background: linear-gradient(180deg, #E8E0F7 0%, #FADADD 45%, #FCE8DE 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    html.dark .onb {
+      background: linear-gradient(180deg, #221E30 0%, #2A2436 45%, #322A3A 100%) !important;
+    }
+
+    /* 顶部：弱化跳过 */
+    .onb-top {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .onb-skip {
+      font-size: var(--type-caption);
+      color: var(--color-ink-muted);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      backdrop-filter: var(--backdrop-glass);
+      -webkit-backdrop-filter: var(--backdrop-glass);
+      border-radius: 9999px;
+      padding: 8px 18px;
+      font-weight: 500;
+      transition: background 180ms var(--ease-soft), color 180ms var(--ease-soft);
+    }
+    .onb-skip:active { background: var(--color-surface-elevated); color: var(--color-ink-secondary); }
+
+    /* 中部主体：垂直居中 */
+    .onb-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: var(--space-lg);
+    }
+    .onb-logo {
+      width: 96px; height: 96px;
+      border-radius: 32px;
+      display: grid; place-items: center;
+      font-size: 46px;
+      background: linear-gradient(135deg, #B8A9E8 0%, #F8C9B0 100%);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      animation: float 4s ease-in-out infinite;
+    }
+    .onb-brand-en {
+      font-size: var(--type-nano);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      margin-top: var(--space-sm);
+    }
+    .onb-brand-cn {
+      font-size: var(--type-h1);
+      font-weight: 700;
+      color: var(--color-ink);
+      letter-spacing: 1px;
+    }
+    .onb-value {
+      font-size: var(--type-h2);
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--color-brand-dark);
+      max-width: 18em;
+      margin-top: var(--space-xs);
+    }
+    html.dark .onb-value { color: var(--color-brand-dark); }
+
+    /* 三场景插画 */
+    .onb-scenes {
+      display: flex;
+      gap: var(--space-sm);
+      width: 100%;
+      max-width: 360px;
+      margin-top: var(--space-md);
+    }
+    .onb-scene {
+      flex: 1;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      backdrop-filter: var(--backdrop-glass);
+      -webkit-backdrop-filter: var(--backdrop-glass);
+      border-radius: 20px;
+      padding: var(--space-md) var(--space-xs);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 220ms var(--ease-bounce-soft);
+    }
+    .onb-scene:active { transform: translateY(-3px) scale(1.03); }
+    .onb-scene-orb {
+      width: 52px; height: 52px;
+      border-radius: 18px;
+      display: grid; place-items: center;
+      font-size: 26px;
+    }
+    .onb-scene-orb.sweet { background: rgba(255, 229, 217, 0.72); }
+    .onb-scene-orb.relaxed { background: rgba(216, 226, 220, 0.72); }
+    .onb-scene-orb.daydream { background: rgba(216, 225, 233, 0.72); }
+    .onb-scene p {
+      font-size: var(--type-caption);
+      font-weight: 500;
+      color: var(--color-ink-secondary);
+    }
+
+    /* 底部 CTA */
+    .onb-bottom { padding-bottom: var(--space-md); }
+    .btn-warm {
+      background: linear-gradient(135deg, #F7A76C 0%, #F8C6A0 100%);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(246, 162, 118, 0.40);
+    }
+    .btn-warm:hover { filter: brightness(1.03); }
+    .btn-warm:active { transform: scale(0.98); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .onb-logo { animation: none; }
+    }
+  </style>
+  <script>
+    (function () {
+      try {
+        var m = localStorage.getItem('xj_theme_mode') || 'system';
+        var dark = (m === 'dark') || (m !== 'light' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme-mode', m);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="onb">
+  <!-- 顶部：弱化跳过 -->
+  <div class="onb-top">
+    <a href="auth.html" class="onb-skip" data-action="skip">跳过</a>
+  </div>
+
+  <!-- 中部主体 -->
+  <div class="onb-hero">
+    <div class="onb-logo" aria-hidden="true">🫧</div>
+    <div>
+      <p class="onb-brand-en">EMOTION CORNER</p>
+      <p class="onb-brand-cn">街角情绪盲盒</p>
+    </div>
+    <p class="onb-value">把步行圈，变成<br>有温度的情绪空间</p>
+
+    <div class="onb-scenes">
+      <div class="onb-scene">
+        <div class="onb-scene-orb sweet">🫧</div>
+        <p>顺路拾取</p>
+      </div>
+      <div class="onb-scene">
+        <div class="onb-scene-orb relaxed">🍃</div>
+        <p>转角释放</p>
+      </div>
+      <div class="onb-scene">
+        <div class="onb-scene-orb daydream">🎨</div>
+        <p>周末回顾</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部 CTA -->
+  <div class="onb-bottom">
+    <a href="onboarding-2.html" class="btn btn-warm btn-block" data-action="start" style="text-decoration:none;">开始体验</a>
+  </div>
+
+  <script src="js/themes.js"></script>
+  <script src="js/theme-toggle.js"></script>
+  <script src="js/auth-flow.js"></script>
+  <script>
+    // 标记引导完成：跳过 / 开始体验 都视为已看引导（PRD 边界：换设备/清缓存可再展示）
+    document.querySelectorAll('[data-action="skip"], [data-action="start"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        try { localStorage.setItem('onboarding_done', '1'); } catch (e) {}
+      });
+    });
+
+    // 退出账号后落地：若带 ?logout=1，展示退出提示内容
+    if (window.XJAuth) XJAuth.handleLogoutPrompt();
+  </script>
+</body>
+</html>
