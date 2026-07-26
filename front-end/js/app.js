@@ -597,12 +597,14 @@
           item.setAttribute('aria-selected', 'false');
         }
 
-        if (typeof window.XJAuth !== 'undefined' && XJAuth.isGuestMode) {
+        // 游客守卫：仅当「真的是游客态（xj_guest='1' 且未建立账号）」时才拦截.
+        // 注意:必须调用函数 `XJAuth.isGuestMode()` 而不是只引用函数(后者永远为 truthy,会让守卫对所有用户生效).
+        if (typeof window.XJAuth !== 'undefined' && XJAuth.isGuestMode && XJAuth.isGuestMode()) {
           const href = item.getAttribute('href') || item.dataset.href;
           if (href === 'footprint.html' || href === 'me.html') {
             item.addEventListener('click', e => {
               e.preventDefault();
-              XJAuth.guardGuest('footprint.html');
+              XJAuth.guardGuest(href); // 用实际 href,让 ?from= 反映点的是哪个 tab
             });
             return;
           }
