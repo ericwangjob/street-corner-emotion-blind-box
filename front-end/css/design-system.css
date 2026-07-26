@@ -333,6 +333,23 @@ img {
 }
 .btn-secondary:hover { background: var(--color-surface-elevated); }
 
+.btn:disabled,
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  filter: grayscale(0.15);
+}
+.btn:disabled,
+.btn[disabled] {
+  pointer-events: none;
+}
+.btn[aria-disabled="true"]:hover { background: var(--color-primary); }
+
+.btn-primary:disabled:hover,
+.btn-primary[disabled]:hover { background: var(--color-primary); }
+
 .btn-ghost {
   background: transparent;
   color: var(--color-ink-secondary);
@@ -1982,4 +1999,90 @@ html.theme-anim .compass-center { transition: transform 250ms var(--ease-soft), 
   html.theme-anim .pickup-queue-indicator {
     transition: none !important;
   }
+}
+
+/* ---------- Release Todo Sheet (3-condition gating feedback) ---------- */
+.release-todo-sheet { max-width: 480px; margin: 0 auto; }
+.release-todo-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.release-todo-header-text { flex: 1; min-width: 0; }
+.release-todo-header-text .text-h3 { margin: 0 0 4px; }
+.release-todo-header-text .text-caption { margin: 0; }
+
+.release-todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.release-todo-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background 180ms var(--ease-soft), transform 180ms var(--ease-soft), box-shadow 180ms var(--ease-soft);
+  font: inherit;
+  color: inherit;
+}
+.release-todo-item:hover {
+  background: var(--color-surface-elevated);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.release-todo-item:active { transform: scale(0.98); }
+.release-todo-item:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.release-todo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--color-primary-soft, rgba(120, 104, 168, 0.14));
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.release-todo-body { flex: 1; min-width: 0; }
+.release-todo-title {
+  font-size: var(--type-body);
+  font-weight: 600;
+  color: var(--color-ink);
+  line-height: 1.3;
+}
+.release-todo-desc {
+  font-size: var(--type-caption);
+  color: var(--color-ink-secondary);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.release-todo-arrow {
+  flex-shrink: 0;
+  color: var(--color-ink-muted);
+  display: grid;
+  place-items: center;
+}
+
+/* 深色模式适配 */
+html.dark .release-todo-item { background: rgba(255, 255, 255, 0.04); }
+html.dark .release-todo-icon { background: rgba(120, 104, 168, 0.22); }
+
+/* 减少动态偏好 */
+@media (prefers-reduced-motion: reduce) {
+  html.theme-anim .release-todo-item,
+  html.theme-anim .release-todo-sheet { transition: none !important; }
 }
