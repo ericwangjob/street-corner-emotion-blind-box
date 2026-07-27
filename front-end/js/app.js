@@ -1614,6 +1614,43 @@
     window.XJTheme.applyRippleTheme(currentTheme);
   }
 
+  // ===== 首页欢迎行：游客态切换 =====
+  // 当处于游客模式(xj_guest==='1' 且 xj_account!=='1')时：
+  //   1) 文案 "WELCOME, 散步者" → "游客模式"
+  //   2) 显示右侧小型"微信登录"按钮，点击跳转授权页（?from=index.html）。
+  // 设计原则：低调、不喧宾夺主；只有真正处于游客态时才激活。
+  function initWelcomeRow() {
+    const row = document.getElementById('welcome-row');
+    if (!row) return;
+    const label = document.getElementById('welcome-label');
+    const btn = document.getElementById('welcome-login-btn');
+    if (!label || !btn) return;
+
+    // 必须调用函数 `XJAuth.isGuestMode()` 而不是只引用函数(后者永远为 truthy,
+    // 会让守卫对所有用户生效,参见此前 tab-bar 修复)。
+    const isGuest = !!(window.XJAuth && typeof window.XJAuth.isGuestMode === 'function' && window.XJAuth.isGuestMode());
+    if (!isGuest) return; // 非游客态保持原样,不显示登录按钮
+
+    label.textContent = '游客模式';
+    label.setAttribute('aria-label', '当前为游客模式');
+    btn.hidden = false;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      try {
+        // 从首页来;登录成功后回到 index.html
+        window.location.href = 'auth.html?from=' + encodeURIComponent('index.html');
+      } catch (err) {
+        try { window.location.href = 'auth.html'; } catch (_) {}
+      }
+    });
+
+    // 提供 hover 触觉反馈（与全站 vibrate 模式一致）
+    btn.addEventListener('mouseenter', function () {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      vibrate([10]);
+    });
+  }
+
   // ===== 初始化 =====
   function init() {
     initDynamicTheme();
@@ -1632,6 +1669,7 @@
     initPullToRefresh();
     initSettings();
     initWeeklyChart();
+    initWelcomeRow();
   }
 
   if (document.readyState === 'loading') {

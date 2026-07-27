@@ -258,6 +258,86 @@ img {
   color: var(--color-ink-muted);
 }
 
+/* ---------- Welcome Row · 游客态欢迎条 ----------
+   默认仅渲染 label（"WELCOME, 散步者"），与原有节奏一致。
+   游客态由 app.js → initWelcomeRow 切换为 "游客模式" 并显示右侧小型登录按钮。
+   设计目标：低调、不喧宾夺主、点击即跳转授权页；暗色模式同步调色。 */
+.welcome-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.welcome-row__label {
+  margin: 0;
+  /* text-transform: uppercase 由 .text-nano 提供；游客态下用 JS 改写文案为中文,
+     浏览器对中文 CJK 字符的 uppercase 无影响, 节奏不变。 */
+}
+
+/* 小型"微信登录"按钮：pill 形态、品牌色淡底、字号略小于 .text-nano，
+   整体视觉重量低于主按钮（.btn-primary），与次级 chip/badge 一致。 */
+.welcome-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px 4px 8px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  line-height: 1;
+  color: var(--color-brand-dark);
+  background: var(--color-primary-subtle);
+  border: 1px solid rgba(154, 133, 216, 0.22);
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.25s var(--ease-soft, cubic-bezier(0.16, 1, 0.3, 1)),
+              background-color 0.25s var(--ease-soft, cubic-bezier(0.16, 1, 0.3, 1)),
+              border-color 0.25s var(--ease-soft, cubic-bezier(0.16, 1, 0.3, 1)),
+              box-shadow 0.25s var(--ease-soft, cubic-bezier(0.16, 1, 0.3, 1));
+  user-select: none;
+}
+
+.welcome-login-btn:hover {
+  background: rgba(154, 133, 216, 0.18);
+  border-color: rgba(154, 133, 216, 0.38);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(154, 133, 216, 0.18);
+}
+
+.welcome-login-btn:active {
+  transform: translateY(0);
+  background: rgba(154, 133, 216, 0.22);
+}
+
+.welcome-login-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.welcome-login-btn svg {
+  flex: 0 0 auto;
+  display: block;
+}
+
+.welcome-login-btn[hidden] { display: none; }
+
+/* 暗色模式：拉高对比度，背景更克制 */
+html.dark .welcome-login-btn {
+  color: #C9BCE8;
+  background: rgba(184, 169, 232, 0.10);
+  border-color: rgba(200, 182, 226, 0.26);
+}
+html.dark .welcome-login-btn:hover {
+  background: rgba(184, 169, 232, 0.18);
+  border-color: rgba(200, 182, 226, 0.42);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
+}
+html.dark .welcome-login-btn:active {
+  background: rgba(184, 169, 232, 0.24);
+}
+
 .text-muted { color: var(--color-ink-muted); }
 .text-secondary { color: var(--color-ink-secondary); }
 .text-brand { color: var(--color-brand-dark); }
