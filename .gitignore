@@ -1,9 +1,0 @@
-# Dev / tooling artifacts — never publish to GitHub Pages
-.DS_Store
-.cache/
-.cloudstudio
-.workbuddy/
-ardot/
-frontend/
-front-end/
-Remove_the_white_circular_play*.png
